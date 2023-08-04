@@ -19,7 +19,8 @@ public class UserRegistrationService {
     public void createAccount(String email, String password) {
         final Optional<User> optionalUser = userRepository.checkIfAccountExists(email);
         if (optionalUser.isPresent()) {
-            throw new RuntimeException();
+            // ajouter des exceptions personnalisées
+            throw new RuntimeException("An account with this credential already exists");
         }
         final User user = new User(email, password);
         userRepository.saveUser(user);

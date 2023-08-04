@@ -26,8 +26,8 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
 
     @Override
     public void saveUser(User user) {
-        // TODO Auto-generated method stub
-
+        final UserEntity userEntity = new UserEntity(user.getEmail(), user.getPassword());
+        jpaUserRepository.save(userEntity);
     }
 
 }

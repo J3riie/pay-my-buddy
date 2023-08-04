@@ -1,12 +1,20 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
-public class UserRegistrationRequest {
+import jakarta.validation.constraints.Email;
 
+public class UserRegistrationForm {
+
+    @Email
     private String email;
 
     private String password;
 
     private String passwordConfirmation;
+
+    public UserRegistrationForm(String password, String passwordConfirmation) {
+        this.password = password;
+        this.passwordConfirmation = passwordConfirmation;
+    }
 
     public String getEmail() {
         return email;

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Footer</title>
+</head>
+<body>
+    <!--/*  Multiple fragments may be defined in one file */-->
+    <div th:fragment="footer" th:align="center">
+        &copy; 2023
+        <span>PayMyBuddy</span>
+    </div>
+    <div th:fragment="footer-admin" th:align="center">
+        &copy; 2023
+        <span>PayMyBuddy</span>&nbsp;<span th:text="${@environment.getProperty('app.version')}"></span>
+    </div>
+</body>
+</html>

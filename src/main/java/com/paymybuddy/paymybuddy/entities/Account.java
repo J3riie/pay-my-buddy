@@ -1,8 +1,6 @@
-package src.main.java.com.paymybuddy.paymybuddy.entities;
+package com.paymybuddy.paymybuddy.entities;
 
 import java.math.BigDecimal;
-
-import src.main.java.com.paymybuddy.paymybuddy.entities.Transaction.type;
 
 public class Account {
 
@@ -16,14 +14,14 @@ public class Account {
     }
 
     public Transaction deposit(BigDecimal amount) {
-        return new Transaction(amount, type.DEPOSIT, "");
+        return null;
     }
 
     public Transaction payFriend(BigDecimal amount, String email) {
-        return new Transaction(amount, type.PAY_FRIEND, "");
+        return null;
     }
 
     public Transaction withdraw(BigDecimal amount) {
-        return new Transaction(amount, type.WITHDRAW, "");
+        return null;
     }
 }

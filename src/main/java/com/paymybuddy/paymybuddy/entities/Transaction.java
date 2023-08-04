@@ -1,4 +1,4 @@
-package src.main.java.com.paymybuddy.paymybuddy.entities;
+package com.paymybuddy.paymybuddy.entities;
 
 import java.math.BigDecimal;
 import java.util.Date;

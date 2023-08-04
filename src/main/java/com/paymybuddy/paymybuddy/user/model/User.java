@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+
     private final String email;
 
     private final String password;
@@ -41,5 +42,21 @@ public class User {
 
     public void deleteBankAccount(String IBAN) {
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public List<String> getFriends() {
+        return friends;
     }
 }

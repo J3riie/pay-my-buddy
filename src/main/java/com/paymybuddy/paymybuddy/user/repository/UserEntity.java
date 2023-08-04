@@ -1,7 +1,9 @@
 package com.paymybuddy.paymybuddy.user.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -11,11 +13,24 @@ public class UserEntity {
     @Id
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
     private String nickname;
 
     private List<String> friends;
+
+    public UserEntity() {
+
+    }
+
+    public UserEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.nickname = email;
+        this.friends = new ArrayList<>();
+    }
 
     public String getEmail() {
         return email;
