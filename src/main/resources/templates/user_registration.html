@@ -1,29 +1,18 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>PayMyBuddy</title>
-</head>
-
-<body>
-    <div th:replace="layouts/header :: header">&nbsp;</div>
-    
+<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" layout:fragment="content">
     <h1>User registration</h1>
     
     <form th:action="@{/user}" method="post" th:object="${user}">
-      <label for="lname">Email:</label><br>
-      <input th:field="*{email}" type="text" id="email" placeholder="Saisissez votre mail"><br><br>
+        <label for="lname">Email:</label><br>
+        <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="Saisissez votre mail"><br>
+        
+        <label for="name">Password:</label><br>
+        <input class="form-control" th:field="*{password}" type="text" id="password" th:value="${password}"><br>
       
-      <label for="name">Password:</label><br>
-      <input th:field="*{password}" type="text" id="password" th:value="${password}"><br><br>
-      
-      <label for="name">Confirm password:</label><br>
-      <input th:field="*{passwordConfirmation}" type="text" id="password_confirmation" th:value="${passwordConfirmation}"><br><br>
-      <button type="submit">Register</button>
+        <label for="name">Confirm password:</label><br>
+        <input class="form-control" th:field="*{passwordConfirmation}" type="text" id="password_confirmation" th:value="${passwordConfirmation}"><br>
+        
+        <div th:align="center">
+            <button class="btn btn-primary" type="submit">Register</button>
+        </div>
     </form>
-    
-    <div th:replace="~{layouts/footer :: footer}">&nbsp;</div>
-</body>
-</html>
+</div>

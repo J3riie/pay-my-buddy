@@ -1,18 +1,16 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>PayMyBuddy</title>
 </head>
 
 <body>
-    <div th:replace="~{layouts/header :: header}">&nbsp;</div>
+    <div layout:fragment="content">
     
-    SUCCESS
-    <p th:text="${userEmail}"></p>
-    
-    <div th:replace="~{layouts/footer :: footer-admin}">&nbsp;</div>
+        <div class="alert alert-success">  
+            <strong>SUCCESS</strong>
+            <p th:text="${userEmail}"></p>
+        </div>
+    </div>
 </body>
 </html>
