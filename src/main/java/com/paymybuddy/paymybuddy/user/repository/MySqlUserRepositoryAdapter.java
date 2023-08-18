@@ -30,4 +30,9 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
         jpaUserRepository.save(userEntity);
     }
 
+    @Override
+    public boolean loginUser(String email, String password) {
+        return jpaUserRepository.getReferenceById(email).getPassword().equals(password);
+    }
+
 }

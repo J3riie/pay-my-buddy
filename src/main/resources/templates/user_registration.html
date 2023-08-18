@@ -2,13 +2,13 @@
     <h1>User registration</h1>
     
     <form th:action="@{/user}" method="post" th:object="${user}">
-        <label for="lname">Email:</label><br>
+        <label for="lname">Email address</label><br>
         <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="Saisissez votre mail"><br>
         
-        <label for="name">Password:</label><br>
+        <label for="name">Password</label><br>
         <input class="form-control" th:field="*{password}" type="text" id="password" th:value="${password}"><br>
       
-        <label for="name">Confirm password:</label><br>
+        <label for="name">Confirm password</label><br>
         <input class="form-control" th:field="*{passwordConfirmation}" type="text" id="password_confirmation" th:value="${passwordConfirmation}"><br>
         
         <div th:align="center">

@@ -9,4 +9,6 @@ public interface UserRepository {
     Optional<User> checkIfAccountExists(String email);
 
     void saveUser(User user);
+
+    boolean loginUser(String email, String password);
 }
