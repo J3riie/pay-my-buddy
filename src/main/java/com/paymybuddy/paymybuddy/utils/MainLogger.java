@@ -32,8 +32,7 @@ public class MainLogger {
     }
 
     private String sanitize(String msg) {
-        final String sanitized = replaceCRLFWithUnderscore(msg);
-        return escapeNLFChars(sanitized);
+        return escapeNLFChars(replaceCRLFWithUnderscore(msg));
     }
 
     // Replace any carriage returns (CR) and line feeds (LF) with empty string to prevent log injection attacks.
