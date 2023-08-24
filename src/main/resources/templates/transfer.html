@@ -10,7 +10,8 @@
         <h3 class="col-3 text-start">Send money</h3>
         <button type="button" class="btn btn-primary mb-3 col-2">Add connection</button>
     </div>
-    <form style="height: 100px;" class="row justify-content-center bg-light" th:action="@{/transfer}" th:method="post" th:object="${transaction}">
+    <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
+        <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
         <div class="col-3">
             <label for="connection" class="visually-hidden">Connection</label>
             <select class="form-select">
@@ -26,6 +27,7 @@
         </div>
         <div class="col-1">
             <button type="submit" class="btn btn-success mb-3">Pay</button>
+        </div>
         </div>
     </form>
     <br>
