@@ -1,3 +1,75 @@
-<div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" layout:fragment="content">
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" >
+<head>
+    <link th:href="@{/css/transfer.css}" rel="stylesheet">
+    <title>Transfer</title>
+</head>
 
+<div layout:fragment="content">
+    <div class="row justify-content-between">
+        <h3 class="col-3 text-start">Send money</h3>
+        <button type="button" class="btn btn-primary mb-3 col-2">Add connection</button>
+    </div>
+    <form style="height: 100px;" class="row justify-content-center bg-light" th:action="@{/transfer}" th:method="post" th:object="${transaction}">
+        <div class="col-3">
+            <label for="connection" class="visually-hidden">Connection</label>
+            <select class="form-select">
+                <option selected>Select a connection</option>
+                <option value="1">Hayley</option>
+                <option value="2">Clara</option>
+                <option value="3">Smith</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <label for="amount" class="visually-hidden">Amount</label>
+            <input type="number" style="text-align:right;" class="form-control" id="amount" value="0">
+        </div>
+        <div class="col-1">
+            <button type="submit" class="btn btn-success mb-3">Pay</button>
+        </div>
+    </form>
+    <br>
+    <h3 class="text-start">My transactions</h3>
+    <table class="table table-striped table-hover table-borderless custom-border">
+        <thead class="table-success">
+            <tr>
+                <th class="col-4" scope="col">Connections</th>
+                <th class="col-4" scope="col">Description</th>
+                <th class="col-4" scope="col">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hayley</td>
+                <td>Restaurant bill share</td>
+                <td>10€</td>
+            </tr>
+            <tr>
+                <td>Clara</td>
+                <td>Trip money</td>
+                <td>25€</td>
+            </tr>
+            <tr>
+                <td>Smith</td>
+                <td>Movie ticket</td>
+                <td>8€</td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
 </div>
+</html>

@@ -2,6 +2,8 @@ package com.paymybuddy.paymybuddy.entities;
 
 import java.math.BigDecimal;
 
+import com.paymybuddy.paymybuddy.transfer.model.Transfer;
+
 public class Account {
 
     private final String email;
@@ -13,15 +15,15 @@ public class Account {
         this.balance = balance;
     }
 
-    public Transaction deposit(BigDecimal amount) {
+    public Transfer deposit(BigDecimal amount) {
         return null;
     }
 
-    public Transaction payFriend(BigDecimal amount, String email) {
+    public Transfer payFriend(BigDecimal amount, String email) {
         return null;
     }
 
-    public Transaction withdraw(BigDecimal amount) {
+    public Transfer withdraw(BigDecimal amount) {
         return null;
     }
 }

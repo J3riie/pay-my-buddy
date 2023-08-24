@@ -9,10 +9,9 @@
     <title>Pay My Buddy - Login</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container card">
         <form class="form-signin text-center" th:action="@{/login}" method="post" th:object="${user}">
             <img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
-            </br>
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">@</span>
               <input type="email" class="form-control" th:field="*{email}" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required autofocus>

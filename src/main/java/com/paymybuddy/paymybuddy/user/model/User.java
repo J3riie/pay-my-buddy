@@ -20,30 +20,6 @@ public class User {
         this.friends = new ArrayList<>();
     }
 
-    public void connection(String email, String password) {
-
-    }
-
-    public void disconnection() {
-
-    }
-
-    public void addFriend(String email) {
-
-    }
-
-    public void deleteFriend(String email) {
-
-    }
-
-    public void addBankAccount(String IBAN) {
-
-    }
-
-    public void deleteBankAccount(String IBAN) {
-
-    }
-
     public String getEmail() {
         return email;
     }

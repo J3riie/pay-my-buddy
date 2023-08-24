@@ -38,7 +38,7 @@ public class UserRegistrationController {
         logger.info("Posting the filled form");
         model.addAttribute("userEmail", userRegistrationForm.getEmail());
         userRegistrationService.createAccount(userRegistrationForm.getEmail(), userRegistrationForm.getPassword());
-        return "user_registration_success";
+        return "home";
     }
 
 }
