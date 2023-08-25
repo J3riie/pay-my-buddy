@@ -27,7 +27,7 @@ public class UserLoginController {
         logger.info("Getting the login form");
         final UserLoginForm userLoginForm = new UserLoginForm();
         model.addAttribute("user", userLoginForm);
-        return "log_in";
+        return "login";
     }
 
     @PostMapping("/login")

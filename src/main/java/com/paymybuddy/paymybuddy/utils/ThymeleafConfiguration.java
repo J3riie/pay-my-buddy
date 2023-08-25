@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy.thymeleaf;
+package com.paymybuddy.paymybuddy.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
