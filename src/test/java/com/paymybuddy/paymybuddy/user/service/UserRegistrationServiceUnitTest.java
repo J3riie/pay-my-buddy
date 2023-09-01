@@ -31,7 +31,7 @@ public class UserRegistrationServiceUnitTest {
 
     @BeforeEach
     public void setup() {
-        service = new UserRegistrationService(userRepository);
+        service = new UserRegistrationService(userRepository, null);
     }
 
     @Test

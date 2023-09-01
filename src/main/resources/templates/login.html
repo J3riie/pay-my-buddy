@@ -9,25 +9,30 @@
     <title>Pay My Buddy - Login</title>
 </head>
 <body>
-    <div class="container card">
-        <form class="form-signin text-center" th:action="@{/login}" method="post" th:object="${user}">
-            <img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">@</span>
-              <input type="email" class="form-control" th:field="*{email}" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required autofocus>
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">*</span>
-              <input type="password" class="form-control" th:field="*{password}" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
-            </div>
-        
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me" checked> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-        </form>
+    <div class="container">
+        <div class="alert alert-danger text-center" th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div class="card">
+            <form class="form-signin text-center" th:action="@{/login}" method="post">
+                <img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">@</span>
+                  <input type="email" name="username" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" required autofocus>
+                </div>
+                <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1">*</span>
+                  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" required>
+                </div>
+            
+                <div class="checkbox mb-3">
+                    <label>
+                        <input type="checkbox" value="remember-me" checked> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            </form>
+        </div>
     </div>
     <footer class="footer mt-auto py-3 bg-body-tertiary" th:align="center" th:replace="~{fragments/footer :: footer}">
         Static footer content &copy; 2023

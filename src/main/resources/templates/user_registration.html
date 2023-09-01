@@ -13,7 +13,7 @@
 		<img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
         <h2>User registration</h2>
         
-        <form class="form-signin" th:action="@{/user}" method="post" th:object="${user}">
+        <form class="form-signin" th:action="@{/register}" method="post" th:object="${user}">
             <label for="email">Email address</label><br>
             <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com"><br>
             
