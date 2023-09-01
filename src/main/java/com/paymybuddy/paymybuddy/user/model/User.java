@@ -9,14 +9,14 @@ public class User {
 
     private final String password;
 
-    private final String nickname;
+    private final String username;
 
     private final List<String> friends;
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.nickname = email;
+        this.username = email;
         this.friends = new ArrayList<>();
     }
 
@@ -28,8 +28,8 @@ public class User {
         return password;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
     public List<String> getFriends() {

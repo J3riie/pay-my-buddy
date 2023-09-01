@@ -11,4 +11,6 @@ public interface UserRepository {
     void saveUser(User user);
 
     boolean loginUser(String email, String password);
+
+    User findByEmail(String email);
 }

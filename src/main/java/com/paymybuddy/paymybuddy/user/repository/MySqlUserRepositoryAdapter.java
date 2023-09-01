@@ -18,7 +18,7 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
         final Optional<UserEntity> optionalUser = jpaUserRepository.findById(email);
         if (optionalUser.isPresent()) {
             final UserEntity userEntity = optionalUser.get();
-            final User user = new User(userEntity.getEmail(), userEntity.getNickname());
+            final User user = new User(userEntity.getEmail(), userEntity.getUsername());
             return Optional.of(user);
         }
         return Optional.empty();
@@ -33,6 +33,15 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
     @Override
     public boolean loginUser(String email, String password) {
         return jpaUserRepository.getReferenceById(email).getPassword().equals(password);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        final Optional<UserEntity> optionalUserEntity = jpaUserRepository.findById(email);
+        if (optionalUserEntity.isEmpty()) {
+            throw new RuntimeException();
+        }
+        return new User(optionalUserEntity.get().getEmail(), optionalUserEntity.get().getPassword());
     }
 
 }

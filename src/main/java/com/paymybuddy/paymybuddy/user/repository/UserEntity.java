@@ -17,7 +17,7 @@ public class UserEntity {
     private String password;
 
     @Column(unique = true)
-    private String nickname;
+    private String username;
 
     private List<String> friends;
 
@@ -28,7 +28,7 @@ public class UserEntity {
     public UserEntity(String email, String password) {
         this.email = email;
         this.password = password;
-        this.nickname = email;
+        this.username = email;
         this.friends = new ArrayList<>();
     }
 
@@ -48,12 +48,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUsername(String nickname) {
+        this.username = nickname;
     }
 
     public List<String> getFriends() {

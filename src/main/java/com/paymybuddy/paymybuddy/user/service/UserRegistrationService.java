@@ -2,6 +2,7 @@ package com.paymybuddy.paymybuddy.user.service;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.paymybuddy.user.model.User;
@@ -13,10 +14,13 @@ public class UserRegistrationService {
 
     private static final MainLogger logger = MainLogger.getLogger(UserRegistrationService.class);
 
+    private final PasswordEncoder passwordEncoder;
+
     private final UserRepository userRepository;
 
-    public UserRegistrationService(UserRepository userRepository) {
+    public UserRegistrationService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void createAccount(String email, String password) {
@@ -29,7 +33,6 @@ public class UserRegistrationService {
             throw new RuntimeException("An account with this credential already exists");
         }
         logger.info("The email is new, saving the new user in the database");
-        final User user = new User(email, password);
-        userRepository.saveUser(user);
+        userRepository.saveUser(new User(email, passwordEncoder.encode(password)));
     }
 }
