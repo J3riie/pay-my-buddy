@@ -23,7 +23,7 @@ public class WebSecurityConfig {
             antMatcher("/css/**"), 
             antMatcher("/images/**"), 
             antMatcher("/home"),
-            antMatcher("/user") 
+            antMatcher("/register") 
         };
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers(requestMatcherList)

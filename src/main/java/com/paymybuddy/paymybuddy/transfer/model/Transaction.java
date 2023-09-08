@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
-public class Transfer {
+public class Transaction {
 
     private UUID transactionId;
 
@@ -20,7 +20,7 @@ public class Transfer {
 
     private Date date;
 
-    public Transfer(BigDecimal amount, type type, String connection) {
+    public Transaction(BigDecimal amount, type type, String connection) {
         this.transactionId = UUID.randomUUID();
         this.amount = amount;
         this.connection = connection;
