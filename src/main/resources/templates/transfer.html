@@ -8,7 +8,7 @@
 <div layout:fragment="content">
     <div class="row justify-content-between">
         <h3 class="col-3 text-start">Send money</h3>
-        <button type="button" class="btn btn-primary mb-3 col-2" th:onclick="openConnectionForm()">Add connection</button>
+        <button type="button" class="btn btn-primary mb-3 col-2" th:onclick="showAlert()">Add connection</button>
     </div>
     <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
         <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
@@ -74,10 +74,4 @@
         </li>
     </ul>
 </div>
-
-<script th:inline="javascript">
-function openConnectionForm() {
-    alert("Hello");
-}
-</script>
 </html>

@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy.utils;
+package com.paymybuddy.paymybuddy.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -12,8 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/webjars/**", "/images/**", "/css/**").addResourceLocations("classpath:/META-INF/resources/webjars/",
-                "classpath:/static/images/", "classpath:/static/css/");
+        registry.addResourceHandler("/webjars/**", "/images/**", "/css/**", "/js/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/", "classpath:/static/images/", "classpath:/static/css/", "classpath:/static/js/");
     }
 
     @Override

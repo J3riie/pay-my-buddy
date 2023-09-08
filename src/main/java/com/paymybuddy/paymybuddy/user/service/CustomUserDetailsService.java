@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy.utils;
+package com.paymybuddy.paymybuddy.user.service;
 
 import java.util.Collections;
 

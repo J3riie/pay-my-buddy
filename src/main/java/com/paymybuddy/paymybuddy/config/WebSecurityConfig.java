@@ -1,4 +1,4 @@
-package com.paymybuddy.paymybuddy.utils;
+package com.paymybuddy.paymybuddy.config;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
