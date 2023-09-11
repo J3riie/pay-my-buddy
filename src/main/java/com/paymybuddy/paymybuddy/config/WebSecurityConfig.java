@@ -20,11 +20,13 @@ public class WebSecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // @formatter:off
         final RequestMatcher[] requestMatcherList = new RequestMatcher[] { 
-            antMatcher("/css/**"), 
-            antMatcher("/images/**"), 
+            antMatcher("/css/**"),
+            antMatcher("/js/**"),
+            antMatcher("/images/**"),
             antMatcher("/home"),
-            antMatcher("/register") 
+            antMatcher("/register"),
         };
+
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers(requestMatcherList)
                 .permitAll()
