@@ -1,11 +1,14 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
-import jakarta.validation.constraints.Email;
+import com.paymybuddy.paymybuddy.config.annotation.PasswordMatches;
+import com.paymybuddy.paymybuddy.config.annotation.ValidEmail;
+
 import jakarta.validation.constraints.NotBlank;
 
+@PasswordMatches
 public class UserRegistrationForm {
 
-    @Email
+    @ValidEmail
     @NotBlank
     private String email;
 
@@ -15,12 +18,8 @@ public class UserRegistrationForm {
     @NotBlank
     private String passwordConfirmation;
 
-    public UserRegistrationForm(String password, String passwordConfirmation) {
-        if (!password.equals(passwordConfirmation)) {
-            throw new RuntimeException("Passwords must be equal");
-        }
-        this.password = password;
-        this.passwordConfirmation = passwordConfirmation;
+    public UserRegistrationForm() {
+        // This controller is empty because Thymeleaf provides the parameters values
     }
 
     public String getEmail() {

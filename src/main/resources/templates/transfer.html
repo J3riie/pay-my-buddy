@@ -6,14 +6,37 @@
 </head>
 
 <div layout:fragment="content">
+    
+    <div class="modal fade" id="addConnectionModal" tabindex="-1" role="dialog" aria-labelledby="addConnectionLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addConnectionLabel">Add connection</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label for="connectionEmail" class="visually-hidden">Connection email</label>
+            <input type="text" class="form-control" id="connectionEmail" placeholder="friend@email.com">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <div class="row justify-content-between">
         <h3 class="col-3 text-start">Send money</h3>
-        <button type="button" class="btn btn-primary mb-3 col-2" onclick="onAddConnection()">Add connection</button>
+        <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenConnectionForm()">Add connection</button>
     </div>
+
     <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
         <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
         <div class="col-3">
-            <label for="connection" class="visually-hidden">Connection</label>
+            <label class="visually-hidden">Connection</label>
             <select class="form-select">
                 <option selected>Select a connection</option>
                 <option value="1">Hayley</option>
@@ -80,19 +103,22 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nouvelle Connection</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">New connection</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger text-center" id="modalError">
+                        Invalid email.
+                    </div>
                     <form>
                         <div class="mb-3">
-                            <input type="text" placeholder="Saisir l'email" class="form-control">
+                            <input type="email" id="newFriend" placeholder="Enter email" class="form-control">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary">Ajouter</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="onAddConnection()">Add</button>
                 </div>
             </div>
         </div>

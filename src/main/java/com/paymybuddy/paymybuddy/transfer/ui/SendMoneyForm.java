@@ -1,13 +1,11 @@
 package com.paymybuddy.paymybuddy.transfer.ui;
 
-import com.paymybuddy.paymybuddy.user.model.User;
-
 import jakarta.validation.constraints.NotNull;
 
 public class SendMoneyForm {
 
     @NotNull
-    private User friend;
+    private String friend;
 
     @NotNull
     private int amount;
@@ -15,11 +13,11 @@ public class SendMoneyForm {
     public SendMoneyForm() {
     }
 
-    public User getFriend() {
+    public String getFriend() {
         return friend;
     }
 
-    public void setFriend(User friend) {
+    public void setFriend(String friend) {
         this.friend = friend;
     }
 
