@@ -12,10 +12,10 @@ public class UserRegistrationForm {
     @NotBlank
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String passwordConfirmation;
 
     public String getEmail() {
