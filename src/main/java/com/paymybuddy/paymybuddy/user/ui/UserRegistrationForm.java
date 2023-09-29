@@ -18,10 +18,6 @@ public class UserRegistrationForm {
     @NotBlank
     private String passwordConfirmation;
 
-    public UserRegistrationForm() {
-        // This controller is empty because Thymeleaf provides the parameters values
-    }
-
     public String getEmail() {
         return email;
     }

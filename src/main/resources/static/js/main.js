@@ -1,3 +1,9 @@
+function onSendMoney() {
+  var connection = $('option[selected]').val()
+  var amount = $("#amount").val()
+  //ajax call
+}
+
 function onOpenConnectionForm() {
     $("#modalError").hide()
     var myModal = new bootstrap.Modal(document.getElementById('connectionFormModal'), {backdrop: 'static'})

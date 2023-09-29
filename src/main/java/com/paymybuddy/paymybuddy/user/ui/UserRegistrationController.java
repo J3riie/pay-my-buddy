@@ -2,6 +2,7 @@ package com.paymybuddy.paymybuddy.user.ui;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,8 @@ public class UserRegistrationController {
 
     private final UserRegistrationService userRegistrationService;
 
+    private static final String USESR_REGISTRATION_TEMPLATE = "user_registration";
+
     public UserRegistrationController(UserRegistrationService userRegistrationService) {
         this.userRegistrationService = userRegistrationService;
     }
@@ -28,19 +31,22 @@ public class UserRegistrationController {
         logger.info("Getting the registration form");
         final UserRegistrationForm userRegistrationForm = new UserRegistrationForm();
         model.addAttribute("user", userRegistrationForm);
-        return "user_registration";
+        return USESR_REGISTRATION_TEMPLATE;
     }
 
     @PostMapping("/register")
-    public String handleUserForm(@Valid @ModelAttribute("user") UserRegistrationForm userRegistrationForm, Model model) {
-        logger.info("Posting the filled form");
+    public String handleUserForm(@Valid @ModelAttribute("user") UserRegistrationForm userRegistrationForm, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            logger.error("One or several fields aren't valid");
+            return USESR_REGISTRATION_TEMPLATE;
+        }
         try {
-            model.addAttribute("userEmail", userRegistrationForm.getEmail());
             userRegistrationService.createAccount(userRegistrationForm.getEmail(), userRegistrationForm.getPassword());
             return "redirect:/login";
         } catch (final FunctionalException e) {
             model.addAttribute("emailInUse", true);
-            return "user_registration";
+            logger.error("Email already exists", e);
+            return USESR_REGISTRATION_TEMPLATE;
         }
     }
 

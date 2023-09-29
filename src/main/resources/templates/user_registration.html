@@ -21,21 +21,22 @@
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">@</span>
                     <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com">
-                    <p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
                 </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 
                 <label for="password">Password</label><br>  
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">*</span>
                     <input class="form-control" th:field="*{password}" type="password" id="password" placeholder="******">
-                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
                 </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}"></div>
               
                 <label for="password-confirmation">Confirm password</label><br>
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon1">*</span>
                     <input class="form-control" th:field="*{passwordConfirmation}" type="password" id="password_confirmation" placeholder="******">
                 </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{passwordConfirmation}')}" th:errors="*{passwordConfirmation}"></div>
                 
                 <div th:align="center">
                     <button class="btn btn-primary" type="submit">Register</button>
