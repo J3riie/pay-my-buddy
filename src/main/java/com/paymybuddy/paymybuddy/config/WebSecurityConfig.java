@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,6 +26,8 @@ public class WebSecurityConfig {
             antMatcher("/images/**"),
             antMatcher("/home"),
             antMatcher("/register"),
+            antMatcher("/transfer"),
+            antMatcher("/connections"),
         };
 
         http.authorizeHttpRequests(requests -> requests
@@ -40,6 +43,7 @@ public class WebSecurityConfig {
         .logout(logout -> logout
                 .logoutRequestMatcher(antMatcher("/logout"))
                 .permitAll());
+                //.csrf(AbstractHttpConfigurer::disable);
         // @formatter:on
         return http.build();
     }

@@ -16,6 +16,7 @@
         <form class="form-signin" th:action="@{/register}" method="post" th:object="${user}">
             <label for="email">Email address</label><br>
             <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com"><br>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
             
             <label for="password">Password</label><br>
             <input class="form-control" th:field="*{password}" type="text" id="password" th:value="${password}"><br>

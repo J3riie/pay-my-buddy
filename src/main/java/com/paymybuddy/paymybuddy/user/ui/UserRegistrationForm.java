@@ -2,11 +2,13 @@ package com.paymybuddy.paymybuddy.user.ui;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class UserRegistrationForm {
 
-    @Email
+    @Email(message = "Le mail est invalide")
     @NotBlank
+    @Size(min = 15, max = 50, message = "Veuillez saisir un mail valide")
     private String email;
 
     @NotBlank
@@ -14,14 +16,6 @@ public class UserRegistrationForm {
 
     @NotBlank
     private String passwordConfirmation;
-
-    public UserRegistrationForm(String password, String passwordConfirmation) {
-        if (!password.equals(passwordConfirmation)) {
-            throw new RuntimeException("Passwords must be equal");
-        }
-        this.password = password;
-        this.passwordConfirmation = passwordConfirmation;
-    }
 
     public String getEmail() {
         return email;
