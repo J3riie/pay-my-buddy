@@ -14,6 +14,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.paymybuddy.paymybuddy.user.model.User;
@@ -31,7 +32,7 @@ public class UserRegistrationServiceUnitTest {
 
     @BeforeEach
     public void setup() {
-        service = new UserRegistrationService(userRepository, null);
+        service = new UserRegistrationService(userRepository, new BCryptPasswordEncoder());
     }
 
     @Test

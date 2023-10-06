@@ -26,6 +26,7 @@ public class WebSecurityConfig {
             antMatcher("/images/**"),
             antMatcher("/home"),
             antMatcher("/register"),
+                // TODO remove these path from white list
             antMatcher("/transfer"),
             antMatcher("/connections"),
         };

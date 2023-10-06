@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -22,26 +23,28 @@ public class UserRegistrationControllerIntegrationTest {
     @MockBean
     UserRegistrationService service;
 
+    @MockBean
+    SecurityFilterChain securityFilterChain;
+
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void givenUserRegistrationForm_whenGet_thenUserRegistrationViewIsReturned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")).andExpect(status().isOk()).andExpect(view().name("user_registration"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/register")).andExpect(status().isOk()).andExpect(view().name("user_registration"))
                 .andExpect(model().attributeExists("user"));
     }
 
     @Test
     public void givenValidUserInfo_whenPost_thenUserRegistrationSuccessViewIsReturned() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/user").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation", "apassword"))
-                .andExpect(status().isOk()).andExpect(view().name("user_registration_success")).andExpect(model().attributeExists("userEmail"));
+        mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation",
+                "apassword")).andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/login"));
     }
 
     @Test
     public void givenNonMatchingPasswords_whenPost_thenExceptionThrown() throws Exception {
         assertThrows(ServletException.class, () -> {
-            mockMvc.perform(MockMvcRequestBuilders.post("/user").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation",
+            mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation",
                     "anotherpassword"));
         });
     }

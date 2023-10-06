@@ -10,24 +10,42 @@
 </head>
 <body>
     <div class="container text-center">
-		<img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
-        <h2>User registration</h2>
-        
-        <form class="form-signin" th:action="@{/register}" method="post" th:object="${user}">
-            <label for="email">Email address</label><br>
-            <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com"><br>
-            <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-            
-            <label for="password">Password</label><br>
-            <input class="form-control" th:field="*{password}" type="text" id="password" th:value="${password}"><br>
-          
-            <label for="password-confirmation">Confirm password</label><br>
-            <input class="form-control" th:field="*{passwordConfirmation}" type="text" id="password_confirmation" th:value="${passwordConfirmation}"><br>
-            
-            <div th:align="center">
-                <button class="btn btn-primary" type="submit">Register</button>
-            </div>
-        </form>
+        <div class="alert alert-danger text-center" th:if="${emailInUse}">
+            An account with this email already exists.
+        </div>
+    
+        <div class="card">
+            <form class="form-signin" th:action="@{/register}" method="post" th:object="${user}">
+                <img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
+                <label for="email">Email address</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                
+                <label for="password">Password</label><br>  
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">*</span>
+                    <input class="form-control" th:field="*{password}" type="password" id="password" placeholder="******">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}"></div>
+              
+                <label for="password_confirmation">Confirm password</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">*</span>
+                    <input class="form-control" th:field="*{passwordConfirmation}" type="password" id="password_confirmation" placeholder="******">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{passwordConfirmation}')}" th:errors="*{passwordConfirmation}"></div>
+                <div class="alert alert-warning" th:if="${#fields.hasGlobalErrors()}">
+                <span th:each="error : ${#fields.globalErrors()}" th:text="${error}"></span>
+</div>
+                
+                <div th:align="center">
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
 	<footer class="footer mt-auto py-3 bg-body-tertiary" th:align="center" th:replace="~{fragments/footer :: footer}">
         Static footer content &copy; 2023

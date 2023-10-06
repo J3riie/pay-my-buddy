@@ -1,20 +1,22 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
-import jakarta.validation.constraints.Email;
+import com.paymybuddy.paymybuddy.config.annotation.PasswordMatches;
+import com.paymybuddy.paymybuddy.config.annotation.ValidEmail;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@PasswordMatches
 public class UserRegistrationForm {
 
-    @Email(message = "Le mail est invalide")
+    @ValidEmail
     @NotBlank
     @Size(min = 15, max = 50, message = "Veuillez saisir un mail valide")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String passwordConfirmation;
 
     public String getEmail() {
