@@ -3,11 +3,16 @@ package com.paymybuddy.paymybuddy.user.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class UserEntity {
 
     @Id
@@ -19,10 +24,12 @@ public class UserEntity {
     @Column(unique = true)
     private String username;
 
+    @ElementCollection
+    @CollectionTable(name = "friends", joinColumns = @JoinColumn(name = "user_email"))
+    @Column(name = "friends")
     private List<String> friends;
 
     public UserEntity() {
-
     }
 
     public UserEntity(String email, String password) {
@@ -62,5 +69,9 @@ public class UserEntity {
 
     public void setFriends(List<String> friends) {
         this.friends = friends;
+    }
+
+    public void addFriend(String friend) {
+        this.friends.add(friend);
     }
 }

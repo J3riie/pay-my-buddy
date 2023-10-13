@@ -5,8 +5,10 @@ import com.paymybuddy.paymybuddy.user.repository.UserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "transactions")
 public class TransactionEntity {
 
     @Id
@@ -42,7 +44,8 @@ public class TransactionEntity {
     /**
      * Constructor used for transaction of type send money to a connection
      */
-    public TransactionEntity(String idTransaction, int amount, UserEntity connection, String email, String date, String description) {
+    public TransactionEntity(String idTransaction, int amount, UserEntity connection, String email, String date,
+            String description) {
         this.idTransaction = idTransaction;
         this.amount = amount;
         this.type = transactionType.SEND_MONEY;
@@ -67,7 +70,8 @@ public class TransactionEntity {
     /**
      * Constructor used for transaction of type withdraw or deposit from/on the user's account
      */
-    public TransactionEntity(String idTransaction, int amount, transactionType type, String email, String date, String description) {
+    public TransactionEntity(String idTransaction, int amount, transactionType type, String email, String date,
+            String description) {
         this.idTransaction = idTransaction;
         this.amount = amount;
         this.type = type;

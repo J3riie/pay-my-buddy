@@ -32,9 +32,9 @@ function onAddConnection(e) {
                     if (res.statusCode === 201) {
                         console.log('Connection created successfully')
                         console.log(res.message)
-                        // faire la logique pour fermer puis afficher un message success
-                        //$("#newFriend").val('')
-                        //$("#connectionFormModal").modal('hide')
+                        $("#newFriend").val('')
+                        $("#connectionFormModal").modal('hide')
+                        $("#connectionSuccess").show()
                     } else {
                         console.log('Cannot create connection')
                     }

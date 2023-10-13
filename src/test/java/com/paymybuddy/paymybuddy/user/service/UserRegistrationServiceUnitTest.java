@@ -6,8 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,7 +15,6 @@ import org.mockito.Mock;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.paymybuddy.paymybuddy.user.model.User;
 import com.paymybuddy.paymybuddy.user.repository.MySqlUserRepositoryAdapter;
 import com.paymybuddy.paymybuddy.user.repository.UserRepository;
 
@@ -40,7 +37,7 @@ public class UserRegistrationServiceUnitTest {
         // given
         final String email = "valid@email.com";
         final String password = "avalidpassword";
-        when(userRepository.checkIfAccountExists(email)).thenReturn(Optional.empty());
+        when(userRepository.checkIfAccountExists(email)).thenReturn(false);
         // when
         service.createAccount(email, password);
         // then
@@ -52,7 +49,7 @@ public class UserRegistrationServiceUnitTest {
         // given
         final String email = "existing@email.com";
         final String password = "avalidpassword";
-        when(userRepository.checkIfAccountExists(email)).thenReturn(Optional.of(new User(email, password)));
+        when(userRepository.checkIfAccountExists(email)).thenReturn(true);
         // when then
         assertThrows(RuntimeException.class, () -> { service.createAccount(email, password); });
     }

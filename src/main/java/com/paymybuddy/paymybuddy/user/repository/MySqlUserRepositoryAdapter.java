@@ -14,14 +14,8 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
     private JpaUserRepository jpaUserRepository;
 
     @Override
-    public Optional<User> checkIfAccountExists(String email) {
-        final Optional<UserEntity> optionalUser = jpaUserRepository.findById(email);
-        if (optionalUser.isPresent()) {
-            final UserEntity userEntity = optionalUser.get();
-            final User user = new User(userEntity.getEmail(), userEntity.getUsername());
-            return Optional.of(user);
-        }
-        return Optional.empty();
+    public boolean checkIfAccountExists(String email) {
+        return jpaUserRepository.findById(email).isPresent();
     }
 
     @Override
@@ -42,6 +36,18 @@ public class MySqlUserRepositoryAdapter implements UserRepository {
             throw new RuntimeException();
         }
         return new User(optionalUserEntity.get().getEmail(), optionalUserEntity.get().getPassword());
+    }
+
+    @Override
+    public boolean checkIfEmailIsAFriend(String friendEmail, String authenticatedUserEmail) {
+        return jpaUserRepository.getReferenceById(authenticatedUserEmail).getFriends().contains(friendEmail);
+    }
+
+    @Override
+    public void addConnection(String newConnectionEmail, User authenticatedUser) {
+        final UserEntity userEntity = jpaUserRepository.getReferenceById(authenticatedUser.getEmail());
+        userEntity.addFriend(newConnectionEmail);
+        jpaUserRepository.save(userEntity);
     }
 
 }

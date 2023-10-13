@@ -1,0 +1,2 @@
+INSERT INTO users (email, password, username) VALUES ('present@mail.com', '$2a$10$UNqJhTQaA4ft1alK8WO09.r3PLd0JfohVWbmU9TPXNE945xEIzaqK', 'present');
+INSERT INTO users (email, password, username) VALUES ('example@mail.com', '$2a$10$wbRxKY2EiDGt.RFfZahQX.HAj0.uf0021grj4MXgjEQ2nzqoaCmhu', 'example');
