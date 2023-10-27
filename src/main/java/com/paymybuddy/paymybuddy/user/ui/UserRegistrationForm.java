@@ -1,27 +1,22 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
-import jakarta.validation.constraints.Email;
+import com.paymybuddy.paymybuddy.config.annotation.PasswordMatches;
+import com.paymybuddy.paymybuddy.config.annotation.ValidEmail;
+
 import jakarta.validation.constraints.NotBlank;
 
+@PasswordMatches
 public class UserRegistrationForm {
 
-    @Email
+    @ValidEmail
     @NotBlank
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "Password must not be empty")
     private String passwordConfirmation;
-
-    public UserRegistrationForm(String password, String passwordConfirmation) {
-        if (!password.equals(passwordConfirmation)) {
-            throw new RuntimeException("Passwords must be equal");
-        }
-        this.password = password;
-        this.passwordConfirmation = passwordConfirmation;
-    }
 
     public String getEmail() {
         return email;
