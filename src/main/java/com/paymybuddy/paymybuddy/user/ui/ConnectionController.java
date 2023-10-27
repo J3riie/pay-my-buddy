@@ -1,8 +1,11 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,11 @@ public class ConnectionController {
         this.connectionService = connectionService;
     }
 
+    @GetMapping
+    public List<String> getConnections() {
+        return connectionService.getConnections();
+    }
+
     @PostMapping
     public ResponseEntity<AddConnectionResponse> add(@RequestBody AddConnectionForm connectionForm) {
         try {
@@ -31,7 +39,6 @@ public class ConnectionController {
             connectionService.addConnection(connectionForm.getEmail());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AddConnectionResponse(HttpStatus.CREATED.value(), "Connection created"));
-
         } catch (final FunctionalException e) {
             logger.error("Connection email is invalid.", e);
             return ResponseEntity.status(e.getStatus())

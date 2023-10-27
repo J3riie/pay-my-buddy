@@ -3,6 +3,8 @@
 <head>
     <link th:href="@{/css/transfer.css}" rel="stylesheet">
     <title>Transfer</title>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </head>
 
 <div layout:fragment="content">
@@ -39,14 +41,10 @@
     
     <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
         <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
-        <div class="col-3">
-            <label class="visually-hidden">Connection</label>
-            <select class="form-select">
-                <option selected>Select a connection</option>
-                <option value="1">Hayley</option>
-                <option value="2">Clara</option>
-                <option value="3">Smith</option>
-            </select>
+        <div class="col-3 ui-widget">
+            <label for="connectionSelection" class="visually-hidden">Connection</label>
+            <input type="text" class="form-control" id="connectionSelection">
+            
         </div>
         <div class="col-2">
             <label for="amount" class="visually-hidden">Amount</label>
@@ -57,6 +55,7 @@
         </div>
         </div>
     </form>
+    
     <br>
     <h3 class="text-start">My transactions</h3>
     <table class="table table-striped table-hover table-borderless custom-border">
@@ -68,6 +67,13 @@
             </tr>
         </thead>
         <tbody>
+        <!-- 
+            <tr th:each="transaction ${transactions}">
+                <td th:text="${transaction.connectionEmail}" />
+                <td th:text="${transaction.description}" />
+                <td th:text="${transaction.amount}" />
+            </tr>
+             -->
             <tr>
                 <td>Hayley</td>
                 <td>Restaurant bill share</td>
@@ -109,6 +115,9 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">New connection</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-danger text-center" id="connectionFailure" style="display:none">
+                    No account match this email.
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-danger text-center" id="modalError">

@@ -1,5 +1,7 @@
 package com.paymybuddy.paymybuddy.user.repository;
 
+import java.util.List;
+
 import com.paymybuddy.paymybuddy.user.model.User;
 
 public interface UserRepository {
@@ -12,7 +14,10 @@ public interface UserRepository {
 
     User findByEmail(String email);
 
-    boolean checkIfEmailIsAFriend(String friendEmail, String authenticatedUserEmail);
+    boolean checkIfEmailIsAFriend(String friendEmail,
+            String authenticatedUserEmail);
 
-    void addConnection(String newConnectionEmail, User authenticatedUser);
+    void addConnection(User connectionUser, User authenticatedUser);
+
+    List<String> getFriends(User user);
 }

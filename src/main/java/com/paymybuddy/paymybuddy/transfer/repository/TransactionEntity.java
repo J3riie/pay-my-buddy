@@ -1,7 +1,5 @@
 package com.paymybuddy.paymybuddy.transfer.repository;
 
-import com.paymybuddy.paymybuddy.user.repository.UserEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,15 +19,15 @@ public class TransactionEntity {
     private transactionType type;
 
     // @Column(nullable = true)
-    // private UserEntity connection;
+    // private String receiver;
 
     @Column(nullable = false)
-    private String email;
+    private String sender;
 
     @Column(nullable = false)
     private String date;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String description;
 
     private enum transactionType {
@@ -44,51 +42,29 @@ public class TransactionEntity {
     /**
      * Constructor used for transaction of type send money to a connection
      */
-    public TransactionEntity(String idTransaction, int amount, UserEntity connection, String email, String date,
-            String description) {
+    public TransactionEntity(String idTransaction, int amount, String receiver,
+            String sender, String date, String description) {
         this.idTransaction = idTransaction;
         this.amount = amount;
         this.type = transactionType.SEND_MONEY;
-        // this.connection = connection;
-        this.email = email;
+        // this.receiver = receiver;
+        this.sender = sender;
         this.date = date;
         this.description = description;
-    }
-
-    /**
-     * Constructor used for transaction of type send money to a connection without description
-     */
-    public TransactionEntity(String idTransaction, int amount, UserEntity connection, String email, String date) {
-        this.idTransaction = idTransaction;
-        this.amount = amount;
-        this.type = transactionType.SEND_MONEY;
-        // this.connection = connection;
-        this.email = email;
-        this.date = date;
     }
 
     /**
      * Constructor used for transaction of type withdraw or deposit from/on the user's account
      */
-    public TransactionEntity(String idTransaction, int amount, transactionType type, String email, String date,
+    public TransactionEntity(String idTransaction, int amount,
+            transactionType type, String sender, String date,
             String description) {
         this.idTransaction = idTransaction;
         this.amount = amount;
         this.type = type;
-        this.email = email;
+        this.sender = sender;
         this.date = date;
         this.description = description;
-    }
-
-    /**
-     * Constructor used for transaction of type withdraw or deposit from/on the user's account without description
-     */
-    public TransactionEntity(String idTransaction, int amount, transactionType type, String email, String date) {
-        this.idTransaction = idTransaction;
-        this.amount = amount;
-        this.type = type;
-        this.email = email;
-        this.date = date;
     }
 
     public String getIdTransaction() {
@@ -115,20 +91,20 @@ public class TransactionEntity {
         this.type = type;
     }
 
-    // public UserEntity getConnection() {
-    // return connection;
+    // public String getReceiver() {
+    // return receiver;
     // }
     //
-    // public void setConnection(UserEntity connection) {
-    // this.connection = connection;
+    // public void setReceiver(String receiver) {
+    // this.receiver = receiver;
     // }
 
-    public String getEmail() {
-        return email;
+    public String getSender() {
+        return sender;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
     public String getDate() {
