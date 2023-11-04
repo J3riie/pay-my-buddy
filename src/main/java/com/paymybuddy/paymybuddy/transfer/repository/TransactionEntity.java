@@ -1,5 +1,10 @@
 package com.paymybuddy.paymybuddy.transfer.repository;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,24 +18,24 @@ public class TransactionEntity {
     private String idTransaction;
 
     @Column(nullable = false)
-    private int amount;
+    private BigDecimal amount;
 
     @Column(nullable = false)
-    private transactionType type;
+    private TransactionType type;
 
-    // @Column(nullable = true)
-    // private String receiver;
+    @Column(nullable = true)
+    private String receiver;
 
     @Column(nullable = false)
     private String sender;
 
     @Column(nullable = false)
-    private String date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String description;
 
-    private enum transactionType {
+    private enum TransactionType {
         DEPOSIT,
         WITHDRAW,
         SEND_MONEY
@@ -39,87 +44,47 @@ public class TransactionEntity {
     public TransactionEntity() {
     }
 
-    /**
-     * Constructor used for transaction of type send money to a connection
-     */
-    public TransactionEntity(String idTransaction, int amount, String receiver,
-            String sender, String date, String description) {
-        this.idTransaction = idTransaction;
+    private TransactionEntity(BigDecimal amount, TransactionType type, String receiver, String sender,
+            String description) {
+        this.idTransaction = UUID.randomUUID().toString();
         this.amount = amount;
-        this.type = transactionType.SEND_MONEY;
-        // this.receiver = receiver;
+        this.type = type;
+        this.receiver = receiver;
         this.sender = sender;
-        this.date = date;
+        this.date = LocalDateTime.now();
         this.description = description;
     }
 
-    /**
-     * Constructor used for transaction of type withdraw or deposit from/on the user's account
-     */
-    public TransactionEntity(String idTransaction, int amount,
-            transactionType type, String sender, String date,
+    public static TransactionEntity createSendMoneyTransaction(BigDecimal amount, String receiver, String sender,
             String description) {
-        this.idTransaction = idTransaction;
-        this.amount = amount;
-        this.type = type;
-        this.sender = sender;
-        this.date = date;
-        this.description = description;
+        return new TransactionEntity(amount, TransactionType.SEND_MONEY, receiver, sender, description);
     }
 
     public String getIdTransaction() {
         return idTransaction;
     }
 
-    public void setIdTransaction(String idTransaction) {
-        this.idTransaction = idTransaction;
-    }
-
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public transactionType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(transactionType type) {
-        this.type = type;
+    public String getReceiver() {
+        return receiver;
     }
-
-    // public String getReceiver() {
-    // return receiver;
-    // }
-    //
-    // public void setReceiver(String receiver) {
-    // this.receiver = receiver;
-    // }
 
     public String getSender() {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+        return DateTimeFormatter.ofPattern("dd/MM/yyyy").format(date);
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

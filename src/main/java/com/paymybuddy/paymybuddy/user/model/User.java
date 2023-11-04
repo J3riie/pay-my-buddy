@@ -3,6 +3,8 @@ package com.paymybuddy.paymybuddy.user.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.paymybuddy.paymybuddy.transfer.model.Account;
+
 public class User {
 
     private final String email;
@@ -13,11 +15,14 @@ public class User {
 
     private final List<String> friends;
 
+    private final Account account;
+
     public User(String email, String password) {
         this.email = email;
         this.password = password;
         this.username = email;
         this.friends = new ArrayList<>();
+        this.account = null;
     }
 
     public String getEmail() {
@@ -34,5 +39,9 @@ public class User {
 
     public List<String> getFriends() {
         return friends;
+    }
+
+    public Account getAccount() {
+        return account;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.paymybuddy.paymybuddy.transfer.service.SendMoneyService;
+import com.paymybuddy.paymybuddy.transfer.service.TransactionService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
 
 import jakarta.validation.Valid;
@@ -16,9 +16,9 @@ public class SendMoneyController {
 
     private static final MainLogger logger = MainLogger.getLogger(SendMoneyController.class);
 
-    private final SendMoneyService sendMoneyService;
+    private final TransactionService sendMoneyService;
 
-    public SendMoneyController(SendMoneyService sendMoneyService) {
+    public SendMoneyController(TransactionService sendMoneyService) {
         this.sendMoneyService = sendMoneyService;
     }
 

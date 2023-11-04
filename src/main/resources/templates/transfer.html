@@ -43,15 +43,15 @@
         <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
         <div class="col-3 ui-widget">
             <label for="connectionSelection" class="visually-hidden">Connection</label>
-            <input type="text" class="form-control" id="connectionSelection">
+            <input type="text" th:field="*{friend}" class="form-control" id="connectionSelection">
             
         </div>
         <div class="col-2">
             <label for="amount" class="visually-hidden">Amount</label>
-            <input type="number" style="text-align:right;" class="form-control" id="amount" value="0">
+            <input type="number" th:field="*{amount}" style="text-align:right;" class="form-control" id="amount" value="0">
         </div>
         <div style="height: 38px;" class="col-1"> <!-- 38 px is the same height as the 2 other row elements -->
-            <button type="button" onclick="onSendMoney()" class="btn btn-success mb-3">Pay</button>
+            <button type="submit" class="btn btn-success mb-3">Pay</button> <!-- onclick="onSendMoney()" --> 
         </div>
         </div>
     </form>

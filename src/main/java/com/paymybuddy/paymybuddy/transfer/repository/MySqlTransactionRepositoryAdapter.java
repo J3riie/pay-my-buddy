@@ -1,27 +1,18 @@
 package com.paymybuddy.paymybuddy.transfer.repository;
 
-import java.math.BigDecimal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.paymybuddy.paymybuddy.transfer.model.Transaction;
-
+@Repository
 public class MySqlTransactionRepositoryAdapter implements TransactionRepository {
 
-    @Override
-    public Transaction deposit(BigDecimal amount) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    @Autowired
+    private JpaTransactionRepository jpaTransactionRepository;
 
     @Override
-    public Transaction sendMoney(BigDecimal amount, String email) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    public void save(TransactionEntity transaction) {
+        jpaTransactionRepository.save(transaction);
 
-    @Override
-    public Transaction withdraw(BigDecimal amount) {
-        // TODO Auto-generated method stub
-        return null;
     }
 
 }

@@ -3,12 +3,15 @@ package com.paymybuddy.paymybuddy.user.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.paymybuddy.paymybuddy.transfer.repository.AccountEntity;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,6 +31,9 @@ public class UserEntity {
     @CollectionTable(name = "friends", joinColumns = @JoinColumn(name = "user_email"))
     @Column(name = "friends")
     private List<String> friends;
+
+    @OneToOne
+    private AccountEntity account;
 
     public UserEntity() {
     }
@@ -73,5 +79,13 @@ public class UserEntity {
 
     public void addFriend(String friend) {
         this.friends.add(friend);
+    }
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
     }
 }

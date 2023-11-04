@@ -38,8 +38,8 @@
                 </div>
                 <div class="alert alert-warning" th:if="${#fields.hasErrors('*{passwordConfirmation}')}" th:errors="*{passwordConfirmation}"></div>
                 <div class="alert alert-warning" th:if="${#fields.hasGlobalErrors()}">
-                <span th:each="error : ${#fields.globalErrors()}" th:text="${error}"></span>
-</div>
+                    <span th:each="error : ${#fields.globalErrors()}" th:text="${error}"></span>
+                </div>
                 
                 <div th:align="center">
                     <button class="btn btn-primary" type="submit">Register</button>

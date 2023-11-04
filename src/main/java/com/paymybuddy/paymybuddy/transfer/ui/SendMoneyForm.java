@@ -1,5 +1,7 @@
 package com.paymybuddy.paymybuddy.transfer.ui;
 
+import java.math.BigDecimal;
+
 import jakarta.validation.constraints.NotNull;
 
 public class SendMoneyForm {
@@ -8,7 +10,7 @@ public class SendMoneyForm {
     private String friend;
 
     @NotNull
-    private int amount;
+    private BigDecimal amount;
 
     public SendMoneyForm() {
     }
@@ -21,11 +23,11 @@ public class SendMoneyForm {
         this.friend = friend;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

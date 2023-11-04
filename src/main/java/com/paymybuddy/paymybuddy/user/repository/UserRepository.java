@@ -14,10 +14,11 @@ public interface UserRepository {
 
     User findByEmail(String email);
 
-    boolean checkIfEmailIsAFriend(String friendEmail,
-            String authenticatedUserEmail);
+    boolean checkIfEmailIsAFriend(String friendEmail, String authenticatedUserEmail);
 
     void addConnection(User connectionUser, User authenticatedUser);
 
     List<String> getFriends(User user);
+
+    User findByUsername(String friend);
 }
