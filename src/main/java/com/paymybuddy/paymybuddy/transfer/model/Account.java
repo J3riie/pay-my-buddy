@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createSendMoneyTransaction;
 
 @Entity
-@Table(name = "accounts")
+@Table(name = "ACCOUNTS")
 public class Account {
 
     @Id
