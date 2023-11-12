@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.paymybuddy.paymybuddy.user.service.UserService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,7 +21,7 @@ import jakarta.servlet.ServletException;
 public class UserRegistrationControllerIntegrationTest {
 
     @MockBean
-    UserService service;
+    UserService userService;
 
     @MockBean
     SecurityFilterChain securityFilterChain;
@@ -36,7 +37,7 @@ public class UserRegistrationControllerIntegrationTest {
 
     @Test
     public void givenValidUserInfo_whenPost_thenUserRegistrationSuccessViewIsReturned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation",
+        mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "ane@email.com").param("username", "ane").param("password", "apassword").param("passwordConfirmation",
                 "apassword")).andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/login"));
     }
 

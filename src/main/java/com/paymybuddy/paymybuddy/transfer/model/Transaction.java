@@ -10,22 +10,22 @@ import java.util.UUID;
 @Table(name = "TRANSACTIONS")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type", nullable = false, length = 125)
     private TransactionType type;
 
     @Column
     private String receiver;
 
-    @Column(nullable = false)
+    @Column
     private String sender;
 
-    @Column(nullable = false)
+    @Column(name = "created", nullable = false)
     private LocalDateTime date;
 
     @Column(nullable = false)

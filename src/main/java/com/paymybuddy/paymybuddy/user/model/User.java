@@ -10,7 +10,6 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String email;
 
     @Column(nullable = false, unique = true)
@@ -20,8 +19,8 @@ public class User {
     private String password;
 
     @ElementCollection
-    @CollectionTable(name = "connections", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "connections")
+    @CollectionTable(name = "connections", joinColumns = @JoinColumn(name = "email"))
+    @Column(name = "connection")
     private List<String> connections;
 
     public User() {}
