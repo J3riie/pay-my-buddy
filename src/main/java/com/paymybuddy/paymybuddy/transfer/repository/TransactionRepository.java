@@ -1,7 +1,11 @@
 package com.paymybuddy.paymybuddy.transfer.repository;
 
-public interface TransactionRepository {
+import com.paymybuddy.paymybuddy.transfer.model.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    void save(TransactionEntity transaction);
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, String> {
+
 
 }

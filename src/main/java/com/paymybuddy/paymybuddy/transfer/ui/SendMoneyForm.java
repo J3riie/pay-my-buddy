@@ -12,6 +12,8 @@ public class SendMoneyForm {
     @NotNull
     private BigDecimal amount;
 
+    private String description;
+
     public SendMoneyForm() {
     }
 
@@ -31,4 +33,11 @@ public class SendMoneyForm {
         this.amount = amount;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

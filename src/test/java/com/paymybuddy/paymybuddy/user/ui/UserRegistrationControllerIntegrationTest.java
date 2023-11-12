@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import com.paymybuddy.paymybuddy.user.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -13,15 +14,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.paymybuddy.paymybuddy.user.service.UserRegistrationService;
-
 import jakarta.servlet.ServletException;
 
 @WebMvcTest(UserRegistrationController.class)
 public class UserRegistrationControllerIntegrationTest {
 
     @MockBean
-    UserRegistrationService service;
+    UserService service;
 
     @MockBean
     SecurityFilterChain securityFilterChain;

@@ -14,13 +14,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.transfer.service.TransactionService;
+import com.paymybuddy.paymybuddy.transfer.service.AccountService;
 
 @WebMvcTest(SendMoneyController.class)
 public class SendMoneyControllerIntegrationTest {
 
     @MockBean
-    TransactionService service;
+    AccountService service;
 
     @MockBean
     SecurityFilterChain securityFilterChain;

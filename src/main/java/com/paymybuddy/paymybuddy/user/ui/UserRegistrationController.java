@@ -1,5 +1,6 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
+import com.paymybuddy.paymybuddy.user.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.user.service.UserRegistrationService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
 
 import jakarta.validation.Valid;
@@ -21,10 +21,10 @@ public class UserRegistrationController {
 
     private static final MainLogger logger = MainLogger.getLogger(UserRegistrationController.class);
 
-    private final UserRegistrationService userRegistrationService;
+    private final UserService userService;
 
-    public UserRegistrationController(UserRegistrationService userRegistrationService) {
-        this.userRegistrationService = userRegistrationService;
+    public UserRegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/register")
@@ -37,7 +37,7 @@ public class UserRegistrationController {
 
     @PostMapping("/register")
     public RedirectView handleUserForm(@Valid @ModelAttribute("user") UserRegistrationForm userRegistrationForm,
-            BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+                                       BindingResult result, RedirectAttributes redirectAttributes, Model model) {
         if (result.hasErrors()) {
             logger.error("One or several errors occured during fields validation:");
             for (final ObjectError error : result.getAllErrors()) {
@@ -46,7 +46,7 @@ public class UserRegistrationController {
             return new RedirectView("/register", true);
         }
         try {
-            userRegistrationService.createAccount(userRegistrationForm.getEmail(), userRegistrationForm.getPassword());
+            userService.signUp(userRegistrationForm);
             redirectAttributes.addFlashAttribute("registrationSuccess", true);
             return new RedirectView("/login", true);
         } catch (final FunctionalException e) {

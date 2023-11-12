@@ -2,6 +2,7 @@ package com.paymybuddy.paymybuddy.user.ui;
 
 import java.util.List;
 
+import com.paymybuddy.paymybuddy.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.user.service.ConnectionService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
 
 @RestController
@@ -21,22 +21,23 @@ public class ConnectionController {
 
     private static final MainLogger logger = MainLogger.getLogger(ConnectionController.class);
 
-    private final ConnectionService connectionService;
+    private final UserService userService;
 
-    public ConnectionController(ConnectionService connectionService) {
-        this.connectionService = connectionService;
+    public ConnectionController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<String> getConnections() {
-        return connectionService.getConnections();
+        return userService.getConnections();
     }
 
+    // TODO introduce advice
     @PostMapping
     public ResponseEntity<AddConnectionResponse> add(@RequestBody AddConnectionForm connectionForm) {
         try {
             logger.info("Trying to add add connection {0}", connectionForm);
-            connectionService.addConnection(connectionForm.getEmail());
+            userService.addConnection(connectionForm.getEmail());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AddConnectionResponse(HttpStatus.CREATED.value(), "Connection created"));
         } catch (final FunctionalException e) {

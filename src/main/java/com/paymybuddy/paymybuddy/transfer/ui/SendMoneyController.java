@@ -1,24 +1,22 @@
 package com.paymybuddy.paymybuddy.transfer.ui;
 
+import com.paymybuddy.paymybuddy.transfer.service.AccountService;
+import com.paymybuddy.paymybuddy.utils.MainLogger;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.paymybuddy.paymybuddy.transfer.service.TransactionService;
-import com.paymybuddy.paymybuddy.utils.MainLogger;
-
-import jakarta.validation.Valid;
-
 @Controller
 public class SendMoneyController {
 
     private static final MainLogger logger = MainLogger.getLogger(SendMoneyController.class);
 
-    private final TransactionService sendMoneyService;
+    private final AccountService sendMoneyService;
 
-    public SendMoneyController(TransactionService sendMoneyService) {
+    public SendMoneyController(AccountService sendMoneyService) {
         this.sendMoneyService = sendMoneyService;
     }
 
@@ -33,7 +31,7 @@ public class SendMoneyController {
     @PostMapping("/transfer")
     public String handleUserForm(@Valid @ModelAttribute("transaction") SendMoneyForm sendMoneyForm, Model model) {
         logger.info("Posting the filled form");
-        sendMoneyService.sendMoney(sendMoneyForm.getFriend(), sendMoneyForm.getAmount());
+        sendMoneyService.send(sendMoneyForm.getFriend(), sendMoneyForm.getAmount(), sendMoneyForm.getDescription());
         return "transfer";
     }
 }

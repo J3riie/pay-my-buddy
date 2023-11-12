@@ -1,28 +1,36 @@
 package com.paymybuddy.paymybuddy.user.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.paymybuddy.paymybuddy.transfer.model.Account;
-
+@Entity
+@Table(name = "users")
 public class User {
 
-    private final String email;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String email;
 
-    private final String password;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    private final String username;
+    @Column(nullable = false)
+    private String password;
 
-    private final List<String> friends;
+    @ElementCollection
+    @CollectionTable(name = "connections", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "connections")
+    private List<String> connections;
 
-    private final Account account;
+    public User() {}
 
-    public User(String email, String password) {
+    public User(String email, String username, String password) {
         this.email = email;
         this.password = password;
-        this.username = email;
-        this.friends = new ArrayList<>();
-        this.account = null;
+        this.username = username;
+        this.connections = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -37,11 +45,13 @@ public class User {
         return username;
     }
 
-    public List<String> getFriends() {
-        return friends;
+    public List<String> getConnections() {
+        return connections;
     }
 
-    public Account getAccount() {
-        return account;
+    public void addConnection(String connection) {
+        this.connections.add(connection);
     }
+
+
 }

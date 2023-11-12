@@ -36,6 +36,11 @@ public class FunctionalException extends RuntimeException {
         this.status = status;
     }
 
+    public FunctionalException(String message) {
+        this();
+        this.message = message;
+    }
+
     public HttpStatus getStatus() {
         return this.status;
     }
