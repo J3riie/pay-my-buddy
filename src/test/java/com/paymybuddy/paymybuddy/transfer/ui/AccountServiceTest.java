@@ -40,13 +40,12 @@ class AccountServiceTest {
         userAccount.setUser(user);
         userAccount.setBalance(BigDecimal.valueOf(100.00));
         userAccount.setRib(UUID.randomUUID().toString());
-        accountRepository.save(userAccount);
 
         Account connectionAccount = new Account();
         connectionAccount.setUser(bobby);
         connectionAccount.setBalance(BigDecimal.valueOf(25.00));
         connectionAccount.setRib(UUID.randomUUID().toString());
-        accountRepository.save(connectionAccount);
+        accountRepository.saveAll(List.of(userAccount, connectionAccount));
     }
 
     @Test
