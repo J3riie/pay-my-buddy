@@ -14,14 +14,14 @@ public class SendMoneyController {
 
     private static final MainLogger logger = MainLogger.getLogger(SendMoneyController.class);
 
-    private final AccountService sendMoneyService;
+    private final AccountService accountService;
 
-    public SendMoneyController(AccountService sendMoneyService) {
-        this.sendMoneyService = sendMoneyService;
+    public SendMoneyController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @GetMapping("/transfer")
-    public String displaySendMoneyFormAndTransactions(Model model) {
+    public String initTransfer(Model model) {
         logger.info("Getting the transfer page");
         final SendMoneyForm sendMoneyForm = new SendMoneyForm();
         model.addAttribute("transaction", sendMoneyForm);
@@ -29,9 +29,10 @@ public class SendMoneyController {
     }
 
     @PostMapping("/transfer")
-    public String handleUserForm(@Valid @ModelAttribute("transaction") SendMoneyForm sendMoneyForm, Model model) {
+    public String handleTransfer(@Valid @ModelAttribute("transaction") SendMoneyForm sendMoneyForm) {
         logger.info("Posting the filled form");
-        sendMoneyService.send(sendMoneyForm.getFriend(), sendMoneyForm.getAmount(), sendMoneyForm.getDescription());
+        // TODO amount validation
+        accountService.send(sendMoneyForm.getFriend(), sendMoneyForm.getAmount(), sendMoneyForm.getDescription());
         return "transfer";
     }
 }

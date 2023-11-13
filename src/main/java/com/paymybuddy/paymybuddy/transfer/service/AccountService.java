@@ -9,6 +9,7 @@ import com.paymybuddy.paymybuddy.utils.MainLogger;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static com.paymybuddy.paymybuddy.utils.UserUtil.getAuthenticatedUserEmail;
 
@@ -27,10 +28,12 @@ public class AccountService {
 
     public void send(String connection, BigDecimal amount, String description) {
         String authenticated = getAuthenticatedUserEmail();
+        System.out.println("auth " + authenticated);
         Account userAccount = accountRepository.findByUsernameOrEmail(authenticated).orElseThrow(() -> new FunctionalException(String.format("No account found for user %s", authenticated)));
         Account connectionAccount = accountRepository.findByUsernameOrEmail(connection).orElseThrow(() -> new FunctionalException(String.format("No account found for connection %s", connection)));
         logger.info("Sending {0}€ from {1} to {2}", amount, userAccount.getUsername(), connection);
         Transaction transaction = userAccount.makeTransaction(connectionAccount, amount, description);
+        accountRepository.saveAll(List.of(userAccount, connectionAccount));
         transactionRepository.save(transaction);
     }
 

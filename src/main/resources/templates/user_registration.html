@@ -23,7 +23,14 @@
                     <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com">
                 </div>
                 <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-                
+
+                <label for="username">Username</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">@</span>
+                    <input class="form-control" th:field="*{username}" type="text" id="username" placeholder="Nom d'utilisateur">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
                 <label for="password">Password</label><br>  
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="basic-addon2">*</span>

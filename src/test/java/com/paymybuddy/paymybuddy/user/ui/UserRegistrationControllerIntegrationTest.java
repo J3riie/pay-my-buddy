@@ -1,21 +1,17 @@
 package com.paymybuddy.paymybuddy.user.ui;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import com.paymybuddy.paymybuddy.user.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import jakarta.servlet.ServletException;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserRegistrationController.class)
 public class UserRegistrationControllerIntegrationTest {
@@ -29,23 +25,33 @@ public class UserRegistrationControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @DisplayName("show user registration form")
     @Test
     public void givenUserRegistrationForm_whenGet_thenUserRegistrationViewIsReturned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/register")).andExpect(status().isOk()).andExpect(view().name("user_registration"))
+        mockMvc.perform(get("/register")).andExpect(status().isOk()).andExpect(view().name("user_registration"))
                 .andExpect(model().attributeExists("user"));
     }
 
     @Test
     public void givenValidUserInfo_whenPost_thenUserRegistrationSuccessViewIsReturned() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "ane@email.com").param("username", "ane").param("password", "apassword").param("passwordConfirmation",
-                "apassword")).andExpect(status().is3xxRedirection()).andExpect(view().name("redirect:/login"));
+        mockMvc.perform(post("/register")
+                .param("email", "johndoe@email.com")
+                .param("username", "johndoe")
+                .param("password", "passer@123")
+                .param("passwordConfirmation", "passer@123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
     }
 
     @Test
     public void givenNonMatchingPasswords_whenPost_thenExceptionThrown() throws Exception {
-        assertThrows(ServletException.class, () -> {
-            mockMvc.perform(MockMvcRequestBuilders.post("/register").param("email", "an@email.com").param("password", "apassword").param("passwordConfirmation",
-                    "anotherpassword"));
-        });
+        mockMvc.perform(post("/register")
+                        .param("email", "an@email.com")
+                        .param("username", "johndoe")
+                        .param("password", "apassword")
+                        .param("passwordConfirmation", "anotherpassword"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/register"));
+                // .andExpect(model().hasErrors()); // TODO avoid redirection if we want to access the model and assert errors effectively occurs
     }
 }
