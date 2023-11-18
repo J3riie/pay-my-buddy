@@ -77,4 +77,9 @@ public class Account {
     public String getUsername() {
         return this.user.getUsername();
     }
+
+    public boolean canSendTo(Account connectionAccount) {
+        return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail());
+
+    }
 }
