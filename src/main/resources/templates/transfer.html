@@ -5,6 +5,7 @@
     <title>Transfer</title>
     <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script type="text/javascript" th:src="@{/js/transfer.js}"></script>
 </head>
 
 <div layout:fragment="content">
@@ -117,15 +118,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="alert alert-danger text-center" id="connectionFailure" style="display:none">
-                    No account match this email.
+                    No account match this email or username.
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-danger text-center" id="modalError">
-                        Invalid email.
+                        Invalid email or username.
                     </div>
                     <form>
                         <div class="mb-3">
-                            <input type="email" id="newFriend" placeholder="Enter email" class="form-control">
+                            <input type="email" id="newFriend" placeholder="Enter email or username" class="form-control">
                         </div>
                     </form>
                 </div>

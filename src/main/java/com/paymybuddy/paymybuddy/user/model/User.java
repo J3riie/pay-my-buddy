@@ -1,9 +1,17 @@
 package com.paymybuddy.paymybuddy.user.model;
 
-import jakarta.persistence.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
@@ -23,7 +31,8 @@ public class User {
     @Column(name = "connection")
     private List<String> connections;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String username, String password) {
         this.email = email;
@@ -51,6 +60,5 @@ public class User {
     public void addConnection(String connection) {
         this.connections.add(connection);
     }
-
 
 }
