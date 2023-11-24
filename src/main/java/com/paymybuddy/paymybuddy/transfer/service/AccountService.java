@@ -3,7 +3,6 @@ package com.paymybuddy.paymybuddy.transfer.service;
 import static com.paymybuddy.paymybuddy.utils.UserUtil.getAuthenticatedUserEmail;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -29,25 +28,43 @@ public class AccountService {
     }
 
     public void send(String connection, BigDecimal amount, String description) {
-        final String authenticated = getAuthenticatedUserEmail();
-        final Account userAccount = accountRepository.findByUsernameOrEmail(authenticated).orElseThrow(
-                () -> new FunctionalException(String.format("No account found for user %s", authenticated)));
+        final Account userAccount = getAuthenticatedUserAccount();
         final Account connectionAccount = accountRepository.findByUsernameOrEmail(connection).orElseThrow(
                 () -> new FunctionalException(String.format("No account found for connection %s", connection)));
         if (!userAccount.canSendTo(connectionAccount)) {
             throw new FunctionalException(
-                    String.format("User %s has no friend with email %s", authenticated, connection));
+                    String.format("User %s has no friend with email %s", userAccount.getUsername(), connection));
         }
         logger.info("Sending {0}€ from {1} to {2}", amount, userAccount.getUsername(), connection);
-        final Transaction transaction = userAccount.makeTransaction(connectionAccount, amount, description);
-        accountRepository.saveAll(List.of(userAccount, connectionAccount));
+        final Transaction transaction = userAccount.sendMoney(connectionAccount, amount, description);
+        saveTransactionAndAccounts(transaction, userAccount, connectionAccount);
+    }
+
+    public void deposit(BigDecimal amount, String description) {
+        final Account account = getAuthenticatedUserAccount();
+        logger.info("Adding {0}€ to {1}'s account", amount, account.getUsername());
+        final Transaction transaction = account.deposit(amount, description);
+        saveTransactionAndAccounts(transaction, account);
+    }
+
+    public void withdraw(BigDecimal amount, String description) {
+        final Account account = getAuthenticatedUserAccount();
+        logger.info("Withdrawing {0}€ from {1}'s account", amount, account.getUsername());
+        final Transaction transaction = account.withdraw(amount, description);
+        saveTransactionAndAccounts(transaction, account);
+    }
+
+    private Account getAuthenticatedUserAccount() {
+        final String authenticated = getAuthenticatedUserEmail();
+        return accountRepository.findByUsernameOrEmail(authenticated).orElseThrow(
+                () -> new FunctionalException(String.format("No account found for user %s", authenticated)));
+    }
+
+    private void saveTransactionAndAccounts(Transaction transaction, Account... accounts) {
         transactionRepository.save(transaction);
-    }
-
-    public void deposit(BigDecimal amount) {
-    }
-
-    public void withdraw(BigDecimal amount) {
+        for (final Account account : accounts) {
+            accountRepository.save(account);
+        }
     }
 
 }

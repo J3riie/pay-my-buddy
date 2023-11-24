@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.paymybuddy.paymybuddy.transfer.service.AccountService;
 
-@WebMvcTest(SendMoneyController.class)
+@WebMvcTest(AccountController.class)
 public class SendMoneyControllerIntegrationTest {
 
     @MockBean
