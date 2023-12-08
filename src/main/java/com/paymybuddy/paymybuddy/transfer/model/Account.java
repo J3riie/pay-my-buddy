@@ -1,11 +1,19 @@
 package com.paymybuddy.paymybuddy.transfer.model;
 
-import com.paymybuddy.paymybuddy.user.model.User;
-import jakarta.persistence.*;
+import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createDepositTransaction;
+import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createSendMoneyTransaction;
+import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createWithdrawTransaction;
 
 import java.math.BigDecimal;
 
-import static com.paymybuddy.paymybuddy.transfer.model.Transaction.*;
+import com.paymybuddy.paymybuddy.user.model.User;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ACCOUNTS")
@@ -52,7 +60,6 @@ public class Account {
         this.user = user;
     }
 
-    // TODO
     public boolean canSendTo(Account connectionAccount) {
         return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail())
                 || this.getUser().getConnections().contains(connectionAccount.getUser().getUsername());

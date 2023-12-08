@@ -10,10 +10,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "TRANSACTIONS")
 public class Transaction {
+
     @Id
     private String id;
 
@@ -21,13 +26,13 @@ public class Transaction {
     private BigDecimal amount;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "transaction_type", nullable = false, length = 125)
+    @Column(name = "transaction_type", nullable = false)
     private TransactionType type;
 
-    @Column
+    @Column(nullable = false)
     private String receiver;
 
-    @Column
+    @Column(nullable = false)
     private String sender;
 
     @Column(name = "created", nullable = false)

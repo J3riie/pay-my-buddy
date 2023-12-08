@@ -35,7 +35,7 @@ public class AccountController {
         logger.info("Getting the transfer page");
         final SendMoneyForm sendMoneyForm = new SendMoneyForm();
         model.addAttribute("transaction", sendMoneyForm);
-        // model.addAttribute("transactions", accountService.findAllTransactions());
+        model.addAttribute("transactions", accountService.findAllAuthenticatedUserTransactions());
         return "transfer";
     }
 

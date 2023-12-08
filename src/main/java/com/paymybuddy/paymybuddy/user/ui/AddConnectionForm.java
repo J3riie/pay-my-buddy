@@ -8,5 +8,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class AddConnectionForm {
-    private String email;
+    private String emailOrUsername;
 }

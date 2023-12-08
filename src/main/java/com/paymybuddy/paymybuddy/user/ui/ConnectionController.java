@@ -37,7 +37,7 @@ public class ConnectionController {
     public ResponseEntity<AddConnectionResponse> add(@RequestBody AddConnectionForm connectionForm) {
         try {
             logger.info("Trying to add add connection {0}", connectionForm);
-            userService.addConnection(connectionForm.getEmail());
+            userService.addConnection(connectionForm.getEmailOrUsername());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AddConnectionResponse(HttpStatus.CREATED.value(), "Connection created"));
         } catch (final FunctionalException e) {

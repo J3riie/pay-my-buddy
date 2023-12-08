@@ -9,142 +9,109 @@
 </head>
 
 <div layout:fragment="content">
-    <nav aria-label="breadcrumb">
+    <nav style="background-color: #e2e2e2; position: absolute; padding-top: 10px; padding-left: 20px; top:58px; left: 0px;  width: 100%;" aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="home">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">Transfer</li>
       </ol>
     </nav>
-    <div class="modal fade" id="addConnectionModal" tabindex="-1" role="dialog" aria-labelledby="addConnectionLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addConnectionLabel">Add connection</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label for="connectionEmail" class="visually-hidden">Connection email</label>
-            <input type="text" class="form-control" id="connectionEmail" placeholder="friend@email.com">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Add</button>
-          </div>
+    <section  style="margin-top: 88px">
+        <div class="alert alert-success text-center" id="connectionSuccess" style="display:none">
+            Connection added successfully!
         </div>
-      </div>
-    </div>
-    
-    <div class="alert alert-success text-center" id="connectionSuccess" style="display:none">
-        Connection added successfully!
-    </div>
-    
-    <div class="row justify-content-between">
-        <h3 class="col-3 text-start">Send money</h3>
-        <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenConnectionForm()">Add connection</button>
-    </div>
-    
-    <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
-        <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
-        <div class="col-2 ui-widget">
-            <label for="friend" class="visually-hidden">Connection</label>
-            <input type="text" th:field="*{friend}" class="form-control" id="friend">
-            
+        
+        <div class="row justify-content-between">
+            <h3 class="col-3 text-start">Send money</h3>
+            <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenConnectionForm()">Add connection</button>
         </div>
-        <div class="col-2">
-            <label for="amount" class="visually-hidden">Amount</label>
-            <input type="number" th:field="*{amount}" style="text-align:right;" class="form-control" id="amount" value="0">
-        </div>
-        <div class="col-3">
-            <label for="description" class="visually-hidden">Description</label>
-            <input type="text" th:field="*{description}" class="form-control" id="description">
-        </div>
-        <div style="height: 38px;" class="col-1"> <!-- 38 px is the same height as the 2 other row elements -->
-            <button type="button" class="btn btn-success mb-3" onclick="onSendMoney()">Pay</button>
-        </div>
-        </div>
-    </form>
-    
-    <br>
-    <h3 class="text-start">My transactions</h3>
-    <table class="table table-striped table-hover table-borderless custom-border">
-        <thead class="table-success">
-            <tr>
-                <th class="col-4" scope="col">Connections</th>
-                <th class="col-4" scope="col">Description</th>
-                <th class="col-4" scope="col">Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="transaction : ${transactions}">
-                <td th:text="${transaction.friend}" />
-                <td th:text="${transaction.description}" />
-                <td th:text="${transaction.amount}" />
-            </tr>
-            <tr>
-                <td>Hayley</td>
-                <td>Restaurant bill share</td>
-                <td>10€</td>
-            </tr>
-            <tr>
-                <td>Clara</td>
-                <td>Trip money</td>
-                <td>25€</td>
-            </tr>
-            <tr>
-                <td>Smith</td>
-                <td>Movie ticket</td>
-                <td>8€</td>
-            </tr>
-        </tbody>
-    </table>
-    <ul class="pagination justify-content-center">
-        <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+        
+        <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
+            <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
+            <div class="col-2 ui-widget">
+                <label for="friend" class="visually-hidden">Connection</label>
+                <input type="text" th:field="*{friend}" class="form-control" id="friend">
+                
+            </div>
+            <div class="col-2">
+                <label for="amount" class="visually-hidden">Amount</label>
+                <input type="number" th:field="*{amount}" style="text-align:right;" class="form-control" id="amount" value="0">
+            </div>
+            <div class="col-3">
+                <label for="description" class="visually-hidden">Description</label>
+                <input type="text" th:field="*{description}" class="form-control" id="description">
+            </div>
+            <div style="height: 38px;" class="col-1"> <!-- 38 px is the same height as the 2 other row elements -->
+                <button type="button" class="btn btn-success mb-3" onclick="onSendMoney()">Pay</button>
+            </div>
+            </div>
+        </form>
+        
+        <br>
+        <h3 class="text-start">My transactions</h3>
+        <table class="table table-striped table-hover table-borderless custom-border">
+            <thead class="table-success">
+                <tr>
+                    <th class="col-3" scope="col">From</th>
+                    <th class="col-3" scope="col">To</th>
+                    <th class="col-3" scope="col">Description</th>
+                    <th class="col-3" scope="col">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="transaction : ${transactions}">
+                    <td th:text="${transaction.getSender()}" />
+                    <td th:text="${transaction.getReceiver()}" />
+                    <td th:text="${transaction.getDescription()}" />
+                    <td th:text="${transaction.getAmount()} + €" />
+                </tr>
+            </tbody>
+        </table>
+        <ul class="pagination justify-content-center">
             <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="connectionFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New connection</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="alert alert-danger text-center" id="connectionFailure" style="display:none">
-                    No account match this email or username.
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger text-center" id="modalError">
-                        Invalid email or username.
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    
+    
+        <!-- Modal -->
+        <div class="modal fade" id="connectionFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New connection</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form>
-                        <div class="mb-3">
-                            <input type="email" id="newFriend" placeholder="Enter email or username" class="form-control">
+                    <div class="modal-body">
+                        <div class="alert alert-danger text-center" id="errorUserAlreadyPresent" style="display:none">
+                            This user is already your friend!
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="onAddConnection()">Add</button>
+                        <div class="alert alert-danger text-center" id="errorUserNotExisting" style="display:none">
+                            No account match this email or username.
+                        </div>
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" id="newFriend" placeholder="Enter email or username" class="form-control">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="onAddConnection()">Add</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
 </div>
 
 </html>
