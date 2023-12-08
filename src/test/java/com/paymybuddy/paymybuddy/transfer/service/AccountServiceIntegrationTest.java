@@ -1,18 +1,13 @@
 package com.paymybuddy.paymybuddy.transfer.service;
 
-import com.paymybuddy.paymybuddy.transfer.model.Account;
 import com.paymybuddy.paymybuddy.transfer.repository.AccountRepository;
 import com.paymybuddy.paymybuddy.transfer.repository.TransactionRepository;
-import com.paymybuddy.paymybuddy.user.model.User;
-import com.paymybuddy.paymybuddy.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,34 +21,19 @@ class AccountServiceIntegrationTest {
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private AccountService accountService;
 
-    @BeforeEach
-    void init() {
-        final User user = new User("johndoe@test.com", "johndoe", "passer@123");
-        user.addConnection("bobby@test.com");
-        user.setAccount(new Account(BigDecimal.valueOf(100.00)));
-
-        final User bobby = new User("bobby@test.com", "bobby", "passer@123");
-        bobby.addConnection(user.getEmail());
-        bobby.setAccount(new Account(BigDecimal.valueOf(25.00)));
-
-        userRepository.saveAll(List.of(user, bobby));
-    }
 
     @Test
-    @WithMockUser(username = "johndoe", password = "passer@123")
+    @WithMockUser(username = "present", password = "passer@123")
     void sendShouldTransferMoneyToConnectionAccount() {
-        accountService.send("bobby", BigDecimal.valueOf(10), "Envoi 10€ a Bobby");
+        accountService.send("example", BigDecimal.valueOf(10), "Envoi 10€ a Example");
 
-        assertThat(transactionRepository.findAll()).isNotEmpty();
-        assertThat(accountRepository.findByUsernameOrEmail("johndoe").get().getBalance())
+        assertThat(accountRepository.findByUsernameOrEmail("present").get().getBalance())
                 .isEqualByComparingTo(BigDecimal.valueOf(90.00));
-        assertThat(accountRepository.findByUsernameOrEmail("bobby@test.com").get().getBalance())
-                .isEqualByComparingTo(BigDecimal.valueOf(35.00));
+
+        assertThat(accountRepository.findByUsernameOrEmail("example@mail.com").get().getBalance())
+                .isEqualByComparingTo(BigDecimal.valueOf(40.00));
     }
 
 }

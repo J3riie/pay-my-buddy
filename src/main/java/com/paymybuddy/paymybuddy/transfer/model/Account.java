@@ -52,8 +52,10 @@ public class Account {
         this.user = user;
     }
 
+    // TODO
     public boolean canSendTo(Account connectionAccount) {
-        return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail());
+        return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail())
+                || this.getUser().getConnections().contains(connectionAccount.getUser().getUsername());
 
     }
 
