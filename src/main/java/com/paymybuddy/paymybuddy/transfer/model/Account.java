@@ -1,25 +1,15 @@
 package com.paymybuddy.paymybuddy.transfer.model;
 
-import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createDepositTransaction;
-import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createSendMoneyTransaction;
-import static com.paymybuddy.paymybuddy.transfer.model.Transaction.createWithdrawTransaction;
+import com.paymybuddy.paymybuddy.user.model.User;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-import com.paymybuddy.paymybuddy.user.model.User;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import static com.paymybuddy.paymybuddy.transfer.model.Transaction.*;
 
 @Entity
 @Table(name = "ACCOUNTS")
-public class PayMyBuddyAccount {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,12 +17,15 @@ public class PayMyBuddyAccount {
 
     private BigDecimal balance;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "account")
     private User user;
 
-    public PayMyBuddyAccount() {
+    public Account() {
         this.balance = BigDecimal.ZERO;
+    }
+
+    public Account(BigDecimal initialValue) {
+        this.balance = initialValue;
     }
 
     public Long getId() {
@@ -59,7 +52,7 @@ public class PayMyBuddyAccount {
         this.user = user;
     }
 
-    public boolean canSendTo(PayMyBuddyAccount connectionAccount) {
+    public boolean canSendTo(Account connectionAccount) {
         return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail());
 
     }
@@ -68,7 +61,7 @@ public class PayMyBuddyAccount {
         return this.user.getUsername();
     }
 
-    public Transaction sendMoney(PayMyBuddyAccount connectionAccount, BigDecimal amount, String description) {
+    public Transaction sendMoney(Account connectionAccount, BigDecimal amount, String description) {
         this.setBalance(this.balance.subtract(amount));
         connectionAccount.setBalance(connectionAccount.balance.add(amount));
         return createSendMoneyTransaction(amount, connectionAccount.getUsername(), this.getUsername(), description);
@@ -82,5 +75,10 @@ public class PayMyBuddyAccount {
     public Transaction withdraw(BigDecimal amount, String description) {
         this.setBalance(this.balance.subtract(amount));
         return createWithdrawTransaction(amount, this.getUsername(), description);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Account[balance: %s]", this.balance);
     }
 }

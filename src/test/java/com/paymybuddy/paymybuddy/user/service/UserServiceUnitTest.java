@@ -1,14 +1,9 @@
 package com.paymybuddy.paymybuddy.user.service;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
-import java.util.Optional;
-
+import com.paymybuddy.paymybuddy.exception.FunctionalException;
+import com.paymybuddy.paymybuddy.user.model.User;
+import com.paymybuddy.paymybuddy.user.repository.UserRepository;
+import com.paymybuddy.paymybuddy.user.ui.UserRegistrationForm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,10 +13,14 @@ import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.user.model.User;
-import com.paymybuddy.paymybuddy.user.repository.UserRepository;
-import com.paymybuddy.paymybuddy.user.ui.UserRegistrationForm;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(SpringExtension.class)
@@ -63,4 +62,5 @@ public class UserServiceUnitTest {
         // then
         then(thrown).isInstanceOf(FunctionalException.class);
     }
+
 }

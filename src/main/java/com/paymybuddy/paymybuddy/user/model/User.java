@@ -1,19 +1,10 @@
 package com.paymybuddy.paymybuddy.user.model;
 
+import com.paymybuddy.paymybuddy.transfer.model.Account;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.paymybuddy.paymybuddy.transfer.model.PayMyBuddyAccount;
-
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "USERS")
@@ -34,13 +25,14 @@ public class User {
     private final List<String> connections;
 
     @OneToMany
-    @Column(nullable = true)
     private List<Bank> banks;
 
-    @OneToOne
-    private PayMyBuddyAccount account;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public User() {
+        this.account = new Account();
         this.connections = new ArrayList<>();
     }
 
@@ -87,11 +79,11 @@ public class User {
         this.banks.remove(bank);
     }
 
-    public PayMyBuddyAccount getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(PayMyBuddyAccount account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 
