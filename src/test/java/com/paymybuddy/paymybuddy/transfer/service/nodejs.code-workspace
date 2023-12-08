@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../../../../../../node.js/knative_poc"
+		},
+		{
+			"path": "../../../../../../../../../../node.js/script-executor-with-json-object"
+		}
+	],
+	"settings": {
+		"typescript.tsdk": "scratch\\node_modules\\typescript\\lib"
+	}
+}

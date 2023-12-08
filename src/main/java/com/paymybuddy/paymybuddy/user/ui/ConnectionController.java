@@ -2,7 +2,6 @@ package com.paymybuddy.paymybuddy.user.ui;
 
 import java.util.List;
 
-import com.paymybuddy.paymybuddy.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
+import com.paymybuddy.paymybuddy.user.service.UserService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
 
 @RestController
@@ -41,7 +41,7 @@ public class ConnectionController {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AddConnectionResponse(HttpStatus.CREATED.value(), "Connection created"));
         } catch (final FunctionalException e) {
-            logger.error("Connection email is invalid.", e);
+            logger.error("Something went wrong.", e);
             return ResponseEntity.status(e.getStatus())
                     .body(new AddConnectionResponse(e.getStatus().value(), e.getMessage()));
         }

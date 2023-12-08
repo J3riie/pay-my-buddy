@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 import com.paymybuddy.paymybuddy.user.model.User;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ACCOUNTS")
-public class Account {
+public class PayMyBuddyAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +27,11 @@ public class Account {
 
     private BigDecimal balance;
 
-    @Column(nullable = false)
-    private String rib;
-
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Account() {
+    public PayMyBuddyAccount() {
         this.balance = BigDecimal.ZERO;
     }
 
@@ -54,14 +51,6 @@ public class Account {
         this.balance = balance;
     }
 
-    public String getRib() {
-        return rib;
-    }
-
-    public void setRib(String rib) {
-        this.rib = rib;
-    }
-
     public User getUser() {
         return user;
     }
@@ -70,7 +59,7 @@ public class Account {
         this.user = user;
     }
 
-    public boolean canSendTo(Account connectionAccount) {
+    public boolean canSendTo(PayMyBuddyAccount connectionAccount) {
         return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail());
 
     }
@@ -79,7 +68,7 @@ public class Account {
         return this.user.getUsername();
     }
 
-    public Transaction sendMoney(Account connectionAccount, BigDecimal amount, String description) {
+    public Transaction sendMoney(PayMyBuddyAccount connectionAccount, BigDecimal amount, String description) {
         this.setBalance(this.balance.subtract(amount));
         connectionAccount.setBalance(connectionAccount.balance.add(amount));
         return createSendMoneyTransaction(amount, connectionAccount.getUsername(), this.getUsername(), description);

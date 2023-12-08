@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
+import com.paymybuddy.paymybuddy.transfer.model.PayMyBuddyAccount;
 import com.paymybuddy.paymybuddy.user.model.User;
 import com.paymybuddy.paymybuddy.user.repository.UserRepository;
 import com.paymybuddy.paymybuddy.user.ui.UserRegistrationForm;
@@ -43,6 +44,7 @@ public class UserService {
         }
         logger.info("The email is new, saving the new user in the database");
         final User user = new User(email, username, encoder.encode(registrationForm.getPassword()));
+        user.setAccount(new PayMyBuddyAccount());
         userRepository.save(user);
         logger.info("User {0} successfully registered", email);
     }

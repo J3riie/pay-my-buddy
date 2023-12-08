@@ -5,5 +5,8 @@ INSERT INTO CONNECTIONS (email, connection) VALUES ('present@mail.com', 'friend1
 INSERT INTO CONNECTIONS (email, connection) VALUES ('present@mail.com', 'friend2');
 INSERT INTO CONNECTIONS (email, connection) VALUES ('present@mail.com', 'friend3');
 INSERT INTO CONNECTIONS (email, connection) VALUES ('present@mail.com', 'friend4');
+INSERT INTO CONNECTIONS (email, connection) VALUES ('present@mail.com', 'example');
 
---INSERT INTO transactions (idTransaction, amount, type, connection, email, date, description) VALUES (1, 10, "SEND_MONEY", "example@mail.com", "present@mail.com", "2023/10/20", "Cinema bill");
+INSERT INTO ACCOUNTS (balance, user_id) VALUES (10, 'present@mail.com');
+
+--INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description) VALUES (1, 10, "SEND_MONEY", "example@mail.com", "present@mail.com", "2023/10/20", "Cinema bill");

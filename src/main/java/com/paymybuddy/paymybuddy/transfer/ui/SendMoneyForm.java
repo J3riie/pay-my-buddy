@@ -12,6 +12,7 @@ public class SendMoneyForm {
     @NotNull
     private BigDecimal amount;
 
+    @NotNull
     private String description;
 
     public SendMoneyForm() {

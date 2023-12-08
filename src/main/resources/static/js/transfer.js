@@ -78,7 +78,7 @@ function searchConnections() {
         success: function(res) {
             console.log(res)
             userConnections = res
-            $("#connectionSelection").autocomplete({
+            $("#friend").autocomplete({
                 autoFocus: true,
                 minLength: 2,
                 source: userConnections
@@ -93,21 +93,23 @@ function searchConnections() {
 function onSendMoney() {
     console.log("onSendMoney")
     
-    const connection = $("#connectionSelection").val()
+    const friend = $("#friend").val()
     const amount = $("#amount").val()
+    const description = $("#description").val()
     
     var header = $("meta[name='_csrf_header']").attr("content");
     var token = $("meta[name='_csrf']").attr("content");
     var sendMoneyForm = {
-        connection: connection,
-        amount: amount
+        friend: friend,
+        amount: amount,
+        description: description
     }
 
     console.log(sendMoneyForm)
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/sendMoney",
+        url: "/transfer",
         beforeSend: function(req) {
             req.setRequestHeader(header, token);
         },
@@ -117,8 +119,9 @@ function onSendMoney() {
             console.log(res)
             console.log('Money sent successfully')
             console.log(res.message)
-            $("#connectionSelection").val('')
+            $("#friend").val('')
             $("#amount").val('')
+            $("#description").val('')
         },
         error: function(err) {
             console.error(err)
