@@ -1,4 +1,3 @@
-var userConnections;
 $(document).ready(function() {
     console.log("on load");
     searchConnections();
@@ -68,11 +67,10 @@ function searchConnections() {
         },
         success: function(res) {
             console.log(res)
-            userConnections = res
             $("#friend").autocomplete({
                 autoFocus: true,
                 minLength: 2,
-                source: userConnections
+                source: res
             });
         },
         error: function(err) {

@@ -63,15 +63,19 @@ public class AccountService {
 
     public void deposit(BigDecimal amount, String description) {
         final Account account = userService.getUser(getAuthenticatedUserEmail()).getAccount();
-        logger.info("Adding {0}€ to {1}'s account", amount, account.getUsername());
+        logger.info("Current {0}s balance: {1} ", account.getUsername(), account.getBalance());
+        logger.info("Adding {0}€ to {1}s account", amount, account.getUsername());
         final Transaction transaction = account.deposit(amount, description);
+        logger.info("New balance: {0}", account.getBalance());
         saveTransactionAndAccounts(transaction, account);
     }
 
     public void withdraw(BigDecimal amount, String description) {
         final Account account = userService.getUser(getAuthenticatedUserEmail()).getAccount();
-        logger.info("Withdrawing {0}€ from {1}'s account", amount, account.getUsername());
+        logger.info("Current {0}s balance: {1} ", account.getUsername(), account.getBalance());
+        logger.info("Withdrawing {0}€ from {1}s account", amount, account.getUsername());
         final Transaction transaction = account.withdraw(amount, description);
+        logger.info("New balance: {0}", account.getBalance());
         saveTransactionAndAccounts(transaction, account);
     }
 

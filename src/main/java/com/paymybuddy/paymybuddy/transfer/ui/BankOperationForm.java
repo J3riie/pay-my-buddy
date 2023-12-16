@@ -19,9 +19,6 @@ public class BankOperationForm {
         WITHDRAW
     }
 
-    public BankOperationForm() {
-    }
-
     public BankOperationType getType() {
         return type;
     }
