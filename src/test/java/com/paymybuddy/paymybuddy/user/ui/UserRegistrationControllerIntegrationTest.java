@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,10 +21,13 @@ import com.paymybuddy.paymybuddy.user.service.UserService;
 public class UserRegistrationControllerIntegrationTest {
 
     @MockBean
-    UserService userService;
+    private UserService userService;
 
     @MockBean
-    SecurityFilterChain securityFilterChain;
+    private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private SecurityFilterChain securityFilterChain;
 
     @Autowired
     private MockMvc mockMvc;
@@ -46,6 +50,5 @@ public class UserRegistrationControllerIntegrationTest {
         mockMvc.perform(post("/register").param("email", "an@email.com").param("username", "johndoe")
                 .param("password", "apassword").param("passwordConfirmation", "anotherpassword"))
                 .andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/register"));
-        // .andExpect(model().hasErrors()); // TODO avoid redirection if we want to access the model and assert errors effectively occurs
     }
 }

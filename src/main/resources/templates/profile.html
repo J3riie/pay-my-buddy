@@ -8,23 +8,19 @@
       </ol>
     </nav>
     <section style="margin-top: 88px">
-        <div class="alert alert-success text-center" id="transactionSuccess" style="display:none">
-            Transaction done successfully!
-        </div>
-        
         <div class="row justify-content-between">
             <h3 class="text-start col-3">Profile</h3>
             <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenBankTransactionForm()">Deposit/Withdraw</button>
         </div>
         </br>
         <div class="text-start">
-            <p>Username: </p>
-            <p>Email: </p>
-            <button type="button" class="btn btn-secondary">Change password</button>
+            <p>Username: <span th:text="${username}"></span></p>
+            <p>Email: <span th:text="${email}"></span></p>
             </br>
             </br>
             <h4>My account</h4>
-            <p>Balance: </p>
+            </br>
+            <p>Balance: <span th:text="${balance}"></span></p>
         </div>
         
         <!-- Modal -->

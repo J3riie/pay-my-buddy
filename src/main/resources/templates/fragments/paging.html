@@ -1,0 +1,5 @@
+<a xmlns:th="http://www.thymeleaf.org" th:fragment="paging(pageNum, label, tooltip)" class="page-link"
+  th:href="@{'/transfer?' + 'page=' + ${pageNum}}"
+  th:title="${tooltip}" rel="tooltip">
+  [[${label}]]
+</a>

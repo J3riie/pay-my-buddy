@@ -19,25 +19,27 @@
         <div class="alert alert-success text-center" id="connectionSuccess" style="display:none">
             Connection added successfully!
         </div>
-        
-        <div class="row justify-content-between">
-            <h3 class="col-3 text-start">Send money</h3>
-            <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenConnectionForm()">Add connection</button>
+        <div class="alert alert-danger text-center" id="cannotSend" style="display:none">
+            An error occurred, check your connection's name and your balance!
         </div>
         
-        <form th:action="@{/transfer}" th:method="post" th:object="${transaction}">
+        <div class="row justify-content-between">
+            <h3 class="text-start col-3">Transfer</h3>
+            <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenConnectionForm()">Add connection</button>
+        </div>
+
+        <form class="form-inline" th:action="@{/transfer}" th:method="post" th:object="${transaction}">
             <div style="height: 100px; background-color: #f2f2f2; align-items: center;" class="row justify-content-center">
-            <div class="col-2 ui-widget">
-                <label for="friend" class="visually-hidden">Connection</label>
+            <div class="col-2 form-group">
+                <label for="friend">Connection</label>
                 <input type="text" th:field="*{friend}" class="form-control" id="friend">
-                
             </div>
-            <div class="col-2">
-                <label for="amount" class="visually-hidden">Amount</label>
+            <div class="col-2 form-group">
+                <label for="amount">Amount</label>
                 <input type="number" th:field="*{amount}" style="text-align:right;" class="form-control" id="amount" value="0">
             </div>
-            <div class="col-3">
-                <label for="description" class="visually-hidden">Description</label>
+            <div class="col-3 form-group">
+                <label for="description">Description</label>
                 <input type="text" th:field="*{description}" class="form-control" id="description">
             </div>
             <div style="height: 38px;" class="col-1"> <!-- 38 px is the same height as the 2 other row elements -->
@@ -45,43 +47,69 @@
             </div>
             </div>
         </form>
-        
         <br>
         <h3 class="text-start">My transactions</h3>
         <table class="table table-striped table-hover table-borderless custom-border" id="transactionTable">
             <thead class="table-success">
                 <tr>
-                    <th class="col-3" scope="col">From</th>
-                    <th class="col-3" scope="col">To</th>
+                    <th class="col-2" scope="col">From</th>
+                    <th class="col-2" scope="col">To</th>
+                    <th class="col-2" scope="col">Type</th>
                     <th class="col-3" scope="col">Description</th>
-                    <th class="col-3" scope="col">Amount</th>
+                    <th class="col-2" scope="col">Amount</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="transaction : ${transactions}">
                     <td th:text="${transaction.getSender()}" />
                     <td th:text="${transaction.getReceiver()}" />
+                    <td th:text="${transaction.getType()}" />
                     <td th:text="${transaction.getDescription()}" />
                     <td th:text="${transaction.getAmount()} + €" />
                 </tr>
             </tbody>
         </table>
-        <ul class="pagination justify-content-center">
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+              <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page')}"></a>
             </li>
-        </ul>
-    
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+              <a th:replace="~{fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page')}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+              <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+              th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+              <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+              <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+              <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page')}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+              <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page')}"></a>
+            </li>
+          </ul>
+        </nav>
+<!--         <ul class="pagination justify-content-center"> -->
+<!--             <li class="page-item"> -->
+<!--                 <a class="page-link" href="#" aria-label="Previous"> -->
+<!--                     <span aria-hidden="true">&laquo;</span> -->
+<!--                 </a> -->
+<!--                 </li> -->
+<!--                 <li class="page-item active"><a class="page-link" href="#">1</a></li> -->
+<!--                 <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+<!--                 <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+<!--                 <li class="page-item"> -->
+<!--                 <a class="page-link" href="#" aria-label="Next"> -->
+<!--                     <span aria-hidden="true">&raquo;</span> -->
+<!--                 </a> -->
+<!--             </li> -->
+<!--         </ul> -->
     
         <!-- Modal -->
         <div class="modal fade" id="connectionFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

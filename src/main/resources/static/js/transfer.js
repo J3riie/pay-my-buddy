@@ -111,6 +111,8 @@ function onSendMoney() {
             refreshTransfer()
         },
         error: function(err) {
+            $("#cannotSend").show()
+            hideAfterTimeout("cannotSend")
             console.error(err)
         }
     })

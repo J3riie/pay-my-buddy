@@ -37,8 +37,7 @@ function onNewBankTransaction() {
                 $("#amount").val('')
                 $("#description").val('')
                 $("#bankTransactionFormModal").modal('hide')
-                $("#transactionSuccess").show()
-                hideAfterTimeout("transactionSuccess")
+                location.reload()
             }
         },
         error: function(err) {

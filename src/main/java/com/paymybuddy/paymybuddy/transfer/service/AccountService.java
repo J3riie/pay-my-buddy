@@ -4,8 +4,9 @@ import static com.paymybuddy.paymybuddy.utils.UserUtil.getAuthenticatedUserEmail
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,22 +39,24 @@ public class AccountService {
         this.transactionRepository = transactionRepository;
     }
 
-    public List<Transaction> findAllAuthenticatedUserTransactions() {
-        final User authenticatedUser = userService.getUser(getAuthenticatedUserEmail());
-        return transactionRepository.findAllAuthenticatedUserTransactions(authenticatedUser.getUsername());
+    public Page<Transaction> findAllTransactions(Pageable pageable) {
+        final User authenticatedUser = getUserInformation();
+        return transactionRepository.findAllAuthenticatedUserTransactions(authenticatedUser.getUsername(), pageable);
     }
 
     public void send(String connection, BigDecimal amount, String description) {
         final User authenticatedUser = userService.getUser(getAuthenticatedUserEmail());
+        logger.info(authenticatedUser.getEmail());
         final Account userAccount = authenticatedUser.getAccount();
 
         final User connectionUser = userService.getUser(connection);
         final Account connectionAccount = connectionUser.getAccount();
 
-        if (!userAccount.canSendTo(connectionAccount)) {
-            logger.info("WARNING, can't send to {0}", connectionAccount);
+        if (!userAccount.canSendTo(connectionAccount, amount)) {
+            logger.info("WARNING, cant send to {0}", connection);
             throw new FunctionalException(
-                    String.format("User %s has no friend with email %s", userAccount.getUsername(), connection),
+                    String.format("User %s either has no friend with email or username %s or doesnt have enough money",
+                            userAccount.getUsername(), connection),
                     HttpStatus.BAD_REQUEST);
         }
         logger.info("Sending {0}€ from {1} to {2}", amount, userAccount.getUsername(), connection);
@@ -74,6 +77,11 @@ public class AccountService {
         final Account account = userService.getUser(getAuthenticatedUserEmail()).getAccount();
         logger.info("Current {0}s balance: {1} ", account.getUsername(), account.getBalance());
         logger.info("Withdrawing {0}€ from {1}s account", amount, account.getUsername());
+        if (!account.canWithdraw(amount)) {
+            logger.info("WARNING, cant withdraw this much money");
+            throw new FunctionalException(String.format("User %s doesnt have enough money", account.getUsername()),
+                    HttpStatus.BAD_REQUEST);
+        }
         final Transaction transaction = account.withdraw(amount, description);
         logger.info("New balance: {0}", account.getBalance());
         saveTransactionAndAccounts(transaction, account);
@@ -82,5 +90,9 @@ public class AccountService {
     private void saveTransactionAndAccounts(Transaction transaction, Account... accounts) {
         transactionRepository.save(transaction);
         accountRepository.saveAll(Arrays.asList(accounts));
+    }
+
+    public User getUserInformation() {
+        return userService.getUser(getAuthenticatedUserEmail());
     }
 }

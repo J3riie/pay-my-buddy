@@ -15,6 +15,8 @@ import com.paymybuddy.paymybuddy.exception.FunctionalException;
 import com.paymybuddy.paymybuddy.user.service.UserService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/connections", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ConnectionController {
@@ -32,9 +34,8 @@ public class ConnectionController {
         return userService.getConnections();
     }
 
-    // TODO introduce advice
     @PostMapping
-    public ResponseEntity<AddConnectionResponse> add(@RequestBody AddConnectionForm connectionForm) {
+    public ResponseEntity<AddConnectionResponse> add(@Valid @RequestBody AddConnectionForm connectionForm) {
         try {
             logger.info("Trying to add add connection {0}", connectionForm);
             userService.addConnection(connectionForm.getEmailOrUsername());

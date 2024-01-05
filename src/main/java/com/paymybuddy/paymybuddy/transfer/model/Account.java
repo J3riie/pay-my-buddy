@@ -60,10 +60,21 @@ public class Account {
         this.user = user;
     }
 
-    public boolean canSendTo(Account connectionAccount) {
-        return this.getUser().getConnections().contains(connectionAccount.getUser().getEmail())
-                || this.getUser().getConnections().contains(connectionAccount.getUser().getUsername());
+    public boolean canSendTo(Account connectionAccount, BigDecimal amount) {
+        return hasFriend(connectionAccount.getUser()) && hasEnoughMoney(amount);
+    }
 
+    public boolean canWithdraw(BigDecimal amount) {
+        return hasEnoughMoney(amount);
+    }
+
+    private boolean hasFriend(User connection) {
+        return this.getUser().getConnections().contains(connection.getEmail())
+                || this.getUser().getConnections().contains(connection.getUsername());
+    }
+
+    private boolean hasEnoughMoney(BigDecimal amount) {
+        return amount.intValue() <= this.getBalance().intValue();
     }
 
     public String getUsername() {

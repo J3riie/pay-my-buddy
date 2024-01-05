@@ -12,9 +12,8 @@ public class ContactController {
     private static final MainLogger logger = MainLogger.getLogger(ContactController.class);
 
     @GetMapping("/contact")
-    public String initContact(Model model) {
+    public String getContactPage(Model model) {
         logger.info("Getting the contact page");
-        // TODO send to contact-paymybuddy@yopmail.com and reply with no-reply
         return "contact";
     }
 }

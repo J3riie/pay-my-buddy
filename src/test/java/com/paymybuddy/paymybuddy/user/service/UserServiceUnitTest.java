@@ -1,9 +1,14 @@
 package com.paymybuddy.paymybuddy.user.service;
 
-import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.user.model.User;
-import com.paymybuddy.paymybuddy.user.repository.UserRepository;
-import com.paymybuddy.paymybuddy.user.ui.UserRegistrationForm;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,27 +18,22 @@ import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import com.paymybuddy.paymybuddy.exception.FunctionalException;
+import com.paymybuddy.paymybuddy.user.model.User;
+import com.paymybuddy.paymybuddy.user.repository.UserRepository;
+import com.paymybuddy.paymybuddy.user.ui.UserRegistrationForm;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(SpringExtension.class)
 public class UserServiceUnitTest {
 
-    UserService userService;
-
-    // TODO check point
-    @Mock
-    UserRepository userRepository;
+    private UserService userService;
 
     @Mock
-    PasswordEncoder encoder;
+    private UserRepository userRepository;
+
+    @Mock
+    private PasswordEncoder encoder;
 
     @BeforeEach
     public void setup() {
@@ -43,7 +43,7 @@ public class UserServiceUnitTest {
     }
 
     @Test
-    public void givenNewUserInfo_whenCreateAccount_thenAccountIsSaved() {
+    public void givenNewUserInfo_whenSignUp_thenAccountIsSaved() {
         // given
         given(encoder.encode(null)).willReturn("encoded");
         given(userRepository.findByUsernameOrEmail(null, null)).willReturn(Optional.empty());
@@ -54,7 +54,7 @@ public class UserServiceUnitTest {
     }
 
     @Test
-    public void givenExistingUserInfo_whenCreateAccount_thenThrowNewFunctionalException() {
+    public void givenExistingUserInfo_whenSignUp_thenExceptionIsThrown() {
         // given
         given(userRepository.findByUsernameOrEmail(null, null)).willReturn(Optional.of(new User()));
         // when
@@ -62,5 +62,4 @@ public class UserServiceUnitTest {
         // then
         then(thrown).isInstanceOf(FunctionalException.class);
     }
-
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
 import com.paymybuddy.paymybuddy.user.model.User;
@@ -15,6 +16,7 @@ import com.paymybuddy.paymybuddy.utils.MainLogger;
 import com.paymybuddy.paymybuddy.utils.UserUtil;
 
 @Service
+@Transactional
 public class UserService {
     private static final MainLogger logger = MainLogger.getLogger(UserService.class);
 
@@ -28,8 +30,8 @@ public class UserService {
     }
 
     public User getUser(String email) {
-        return userRepository.findByUsernameOrEmail(email)
-                .orElseThrow(() -> new FunctionalException(String.format("Email %s not exists", email)));
+        return userRepository.findByUsernameOrEmail(email).orElseThrow(
+                () -> new FunctionalException(String.format("User %s does not exist", email), HttpStatus.BAD_REQUEST));
     }
 
     public void signUp(UserRegistrationForm registrationForm) {
@@ -39,7 +41,7 @@ public class UserService {
         final Optional<User> optionalUser = userRepository.findByUsernameOrEmail(email, username);
         if (optionalUser.isPresent()) {
             logger.error("{0} already is present in the database", email);
-            throw new FunctionalException(String.format("User %s already exists", email));
+            throw new FunctionalException(String.format("User %s already exists", email), HttpStatus.CONFLICT);
         }
         logger.info("The email is new, saving the new user in the database");
         final User user = new User(email, username, encoder.encode(registrationForm.getPassword()));
@@ -49,6 +51,7 @@ public class UserService {
 
     public void addConnection(String connectionEmailOrUsername) {
         final String authenticatedUserEmail = UserUtil.getAuthenticatedUserEmail();
+        logger.info(authenticatedUserEmail);
         logger.info("Adding {0} to {1} connections", connectionEmailOrUsername, authenticatedUserEmail);
         logger.info("Checking if given connection email is present in the database");
         final Optional<User> optionalConnection = userRepository.findByUsernameOrEmail(connectionEmailOrUsername);
