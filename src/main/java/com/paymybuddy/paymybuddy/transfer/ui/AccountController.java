@@ -2,7 +2,11 @@ package com.paymybuddy.paymybuddy.transfer.ui;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,9 +34,11 @@ public class AccountController {
     private static final MainLogger logger = MainLogger.getLogger(AccountController.class);
 
     private final AccountService accountService;
+    private final Validator validator;
 
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, Validator validator) {
         this.accountService = accountService;
+        this.validator = validator;
     }
 
     @GetMapping("/transfer")
@@ -52,6 +58,11 @@ public class AccountController {
 
     @PostMapping("/transfer")
     public ResponseEntity<TransactionResponse> pay(@Valid @RequestBody SendMoneyForm sendMoneyForm) {
+        Set<ConstraintViolation<SendMoneyForm>> violations = validator.validate(sendMoneyForm);
+        if (!violations.isEmpty()) {
+            // TODO throw your custom defined exception here
+            throw new ConstraintViolationException(violations);
+        }
         try {
             logger.info("Trying to send {0}€ to {1}: {2}", sendMoneyForm.getAmount(), sendMoneyForm.getFriend(),
                     sendMoneyForm.getDescription());

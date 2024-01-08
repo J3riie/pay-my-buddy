@@ -65,6 +65,12 @@ public class ConnectionControllerIntegrationTest {
         result.andExpect(status().isCreated());
     }
 
+
+    // TODO you expect the test to fail because connection is unknown
+    //  but you mock the userService thus call to userService.addConnection do nothing.
+    //  you can either provide a real implementation of your userService by autowiring it
+    // or make use of mockito.when behaviour
+
     @Test
     @WithMockUser(username = "robin.hugues@mail.com")
     public void givenUnknownUser_whenPost_thenResponseStatusIs400() throws Exception {
