@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link th:href="@{/css/log_in.css}" rel="stylesheet">
+    
+    <title>Pay My Buddy - Sign up</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="alert alert-danger text-center" th:if="${emailInUse}">
+            An account with this email already exists.
+        </div>
+    
+        <div class="card">
+            <form class="form-signin" th:action="@{/register}" method="post" th:object="${user}">
+                <img class="mb-4" th:src="@{images/paymybuddy_logo.png}" alt="Pay My Buddy logo">
+                <label for="email">Email address</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input class="form-control" th:field="*{email}" type="text" id="email" placeholder="example@email.com">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+                <label for="username">Username</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">@</span>
+                    <input class="form-control" th:field="*{username}" type="text" id="username" placeholder="Nom d'utilisateur">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
+                <label for="password">Password</label><br>  
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon2">*</span>
+                    <input class="form-control" th:field="*{password}" type="password" id="password" placeholder="******">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{password}')}" th:errors="*{password}"></div>
+              
+                <label for="password_confirmation">Confirm password</label><br>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon3">*</span>
+                    <input class="form-control" th:field="*{passwordConfirmation}" type="password" id="password_confirmation" placeholder="******">
+                </div>
+                <div class="alert alert-warning" th:if="${#fields.hasErrors('*{passwordConfirmation}')}" th:errors="*{passwordConfirmation}"></div>
+                <div class="alert alert-warning" th:if="${#fields.hasGlobalErrors()}">
+                    <span th:each="error : ${#fields.globalErrors()}" th:text="${error}"></span>
+                </div>
+                
+                <div th:align="center">
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+	<footer class="footer mt-auto py-3 bg-body-tertiary" th:align="center" th:replace="~{fragments/footer :: footer}">
+        Static footer content &copy; 2023
+    </footer>
+</body>
+</html>
