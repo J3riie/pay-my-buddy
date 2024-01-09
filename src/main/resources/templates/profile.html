@@ -1,3 +1,82 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{_layout}" layout:fragment="content">
-
+    <script type="text/javascript" th:src="@{/js/bankOperation.js}"></script>
+    
+    <nav style="background-color: #e2e2e2; position: absolute; padding-top: 10px; padding-left: 20px; top:58px; left: 0px;  width: 100%;" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="home">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+      </ol>
+    </nav>
+    <section style="margin-top: 88px">
+        <div class="row justify-content-between">
+            <h3 class="text-start col-3">Profile</h3>
+            <button type="button" class="btn btn-primary mb-3 col-2" onclick="onOpenBankTransactionForm()">Deposit/Withdraw</button>
+        </div>
+        </br>
+        <div class="text-start">
+            <p>Username: <span th:text="${username}"></span></p>
+            <p>Email: <span th:text="${email}"></span></p>
+            </br>
+            </br>
+            <h4>My account</h4>
+            </br>
+            <p>Balance: <span th:text="${balance}"></span></p>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="bankTransactionFormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Bank Operation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger text-center" id="errorInvalidAmount" style="display:none">
+                            Please enter a valid amount
+                        </div>
+                        <form>
+                            <div class="form-group row">
+                                <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" id="amount">
+                                </div>
+                            </div>
+                            </br>
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="description" placeholder="Description">
+                                </div>
+                            </div>
+                            </br>
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-2 pt-0">Type</legend>
+                                    <div class="col-sm-10 text-start">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="operationType" id="deposit" value="DEPOSIT" checked>
+                                            <label class="form-check-label" for="deposit">
+                                                Deposit
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="operationType" id="withdraw" value="WITHDRAW">
+                                            <label class="form-check-label" for="withdraw">
+                                                Withdraw
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="onNewBankTransaction()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

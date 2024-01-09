@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paymybuddy.paymybuddy.exception.FunctionalException;
-import com.paymybuddy.paymybuddy.user.service.ConnectionService;
+import com.paymybuddy.paymybuddy.user.service.UserService;
 import com.paymybuddy.paymybuddy.utils.MainLogger;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/connections", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -21,26 +23,26 @@ public class ConnectionController {
 
     private static final MainLogger logger = MainLogger.getLogger(ConnectionController.class);
 
-    private final ConnectionService connectionService;
+    private final UserService userService;
 
-    public ConnectionController(ConnectionService connectionService) {
-        this.connectionService = connectionService;
+    public ConnectionController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<String> getConnections() {
-        return connectionService.getConnections();
+        return userService.getConnections();
     }
 
     @PostMapping
-    public ResponseEntity<AddConnectionResponse> add(@RequestBody AddConnectionForm connectionForm) {
+    public ResponseEntity<AddConnectionResponse> add(@Valid @RequestBody AddConnectionForm connectionForm) {
         try {
             logger.info("Trying to add add connection {0}", connectionForm);
-            connectionService.addConnection(connectionForm.getEmail());
+            userService.addConnection(connectionForm.getEmailOrUsername());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new AddConnectionResponse(HttpStatus.CREATED.value(), "Connection created"));
         } catch (final FunctionalException e) {
-            logger.error("Connection email is invalid.", e);
+            logger.error("Something went wrong.", e);
             return ResponseEntity.status(e.getStatus())
                     .body(new AddConnectionResponse(e.getStatus().value(), e.getMessage()));
         }

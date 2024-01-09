@@ -1,67 +1,75 @@
 package com.paymybuddy.paymybuddy.transfer.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "TRANSACTIONS")
 public class Transaction {
 
-    private UUID transactionId;
+    @Id
+    private String id;
 
+    @Column(nullable = false)
     private BigDecimal amount;
 
-    public enum type {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_type", nullable = false)
+    private TransactionType type;
+
+    @Column(nullable = false)
+    private String receiver;
+
+    @Column(nullable = false)
+    private String sender;
+
+    @Column(name = "created", nullable = false)
+    private LocalDateTime date;
+
+    @Column(nullable = false)
+    private String description;
+
+    private enum TransactionType {
         DEPOSIT,
-        PAY_FRIEND,
-        WITHDRAW
+        WITHDRAW,
+        SEND_MONEY
     }
 
-    private String connection;
+    public Transaction() {
+    }
 
-    private Date date;
-
-    public Transaction(BigDecimal amount, type type, String connection) {
-        this.transactionId = UUID.randomUUID();
+    private Transaction(BigDecimal amount, TransactionType type, String receiver, String sender, String description) {
+        this.id = UUID.randomUUID().toString();
         this.amount = amount;
-        this.connection = connection;
-        this.date = new Date();
+        this.type = type;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.date = LocalDateTime.now();
+        this.description = description;
     }
 
-    public UUID getTransactionId() {
-        return transactionId;
+    public static Transaction createSendMoneyTransaction(BigDecimal amount, String receiver, String sender,
+            String description) {
+        return new Transaction(amount, TransactionType.SEND_MONEY, receiver, sender, description);
     }
 
-    public void setTransactionId(UUID transactionId) {
-        this.transactionId = transactionId;
+    public static Transaction createDepositTransaction(BigDecimal amount, String receiverSender, String description) {
+        return new Transaction(amount, TransactionType.DEPOSIT, receiverSender, receiverSender, description);
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public static Transaction createWithdrawTransaction(BigDecimal amount, String receiverSender, String description) {
+        return new Transaction(amount, TransactionType.WITHDRAW, receiverSender, receiverSender, description);
     }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getConnection() {
-        return connection;
-    }
-
-    public void setConnection(String connection) {
-        this.connection = connection;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "";
-    }
-
 }

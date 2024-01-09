@@ -24,10 +24,7 @@ public class WebSecurityConfig {
             antMatcher("/js/**"),
             antMatcher("/images/**"),
             antMatcher("/home"),
-            antMatcher("/register"),
-                // TODO remove these path from white list
-            antMatcher("/transfer"),
-            antMatcher("/connections"),
+            antMatcher("/register")
         };
 
         http.authorizeHttpRequests(requests -> requests

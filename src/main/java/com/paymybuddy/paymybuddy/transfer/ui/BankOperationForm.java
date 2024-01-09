@@ -2,29 +2,29 @@ package com.paymybuddy.paymybuddy.transfer.ui;
 
 import java.math.BigDecimal;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class SendMoneyForm {
+public class BankOperationForm {
 
-    @NotBlank
-    private String friend;
+    @NotNull
+    private BankOperationType type;
 
     @NotNull
     private BigDecimal amount;
 
-    @NotNull
     private String description;
 
-    public SendMoneyForm() {
+    public enum BankOperationType {
+        DEPOSIT,
+        WITHDRAW
     }
 
-    public String getFriend() {
-        return friend;
+    public BankOperationType getType() {
+        return type;
     }
 
-    public void setFriend(String friend) {
-        this.friend = friend;
+    public void setType(BankOperationType type) {
+        this.type = type;
     }
 
     public BigDecimal getAmount() {
