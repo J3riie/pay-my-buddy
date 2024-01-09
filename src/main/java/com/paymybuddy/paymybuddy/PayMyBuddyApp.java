@@ -18,7 +18,7 @@ public class PayMyBuddyApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String encoded = encoder.encode("passer@123");
+        final String encoded = encoder.encode("passer@123");
         System.out.println("## " + encoded);
     }
 }
