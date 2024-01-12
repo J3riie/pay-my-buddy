@@ -1,13 +1,20 @@
+-- Database schema is generated on startup via Hibernate DDL property spring.jpa.hibernate.ddl-auto=create
+-- You will find below the table insertions for the application's data initialization
+
 INSERT INTO ACCOUNTS (balance) VALUES (100);
+-- Password is: present
 INSERT INTO USERS (email, password, username, account_id) VALUES ('robin.hugues@mail.com', '$2a$10$UNqJhTQaA4ft1alK8WO09.r3PLd0JfohVWbmU9TPXNE945xEIzaqK', 'robinhugues', SELECT MAX(ID) FROM ACCOUNTS);
 
 INSERT INTO ACCOUNTS (balance) VALUES (30);
+-- Password is: passer@123
 INSERT INTO USERS (email, password, username, account_id) VALUES ('tony.hawk@mail.com', '$2a$10$d0M98MZB1qRbs7LGD7QPI.05rZdrdfCTweYsmoM1.QsF8NuQd2Rly', 'tony', SELECT MAX(ID) FROM ACCOUNTS);
 
 INSERT INTO ACCOUNTS (balance) VALUES (30);
+-- Password is: passer@123
 INSERT INTO USERS (email, password, username, account_id) VALUES ('martin@mail.com', '$2a$10$d0M98MZB1qRbs7LGD7QPI.05rZdrdfCTweYsmoM1.QsF8NuQd2Rly', 'martin', SELECT MAX(ID) FROM ACCOUNTS);
 
 INSERT INTO ACCOUNTS (balance) VALUES (30);
+-- Password is: passer@123
 INSERT INTO USERS (email, password, username, account_id) VALUES ('anothermartin@mail.com', '$2a$10$d0M98MZB1qRbs7LGD7QPI.05rZdrdfCTweYsmoM1.QsF8NuQd2Rly', 'martin le second', SELECT MAX(ID) FROM ACCOUNTS);
 
 INSERT INTO CONNECTIONS (email, connection) VALUES ('robin.hugues@mail.com', 'tony');

@@ -35,7 +35,7 @@ public class User {
     @Column(name = "connection")
     private final List<String> connections;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Bank> banks;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

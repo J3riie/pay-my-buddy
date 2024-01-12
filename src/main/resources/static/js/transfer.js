@@ -108,7 +108,8 @@ function onSendMoney() {
             console.log(res)
             console.log('Money sent successfully')
             console.log(res.message)
-            refreshTransfer()
+            $("#sendMoneySuccess").show()
+            refreshAfterTimeout()
         },
         error: function(err) {
             $("#cannotSend").show()
@@ -118,10 +119,7 @@ function onSendMoney() {
     })
 }
 
-function hideAfterTimeout(id) {
-    setTimeout(() => {  $("#" + id).hide() }, 5000)
-}
-
-function refreshTransfer() {
-    location.reload()
+function refreshAfterTimeout() {
+    setTimeout(() => {  location.reload() }, 3000)
+    
 }
