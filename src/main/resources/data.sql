@@ -20,7 +20,7 @@ INSERT INTO USERS (email, password, username, account_id) VALUES ('anothermartin
 INSERT INTO CONNECTIONS (email, connection) VALUES ('robin.hugues@mail.com', 'tony');
 INSERT INTO CONNECTIONS (email, connection) VALUES ('tony.hawk@mail.com', 'robinhugues');
 
-INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description) VALUES ('1234-1234-1234', 10, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-25 00:00:00', 'Cinema bill');
-INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description) VALUES ('1234-1234-1235', 45, 'SEND_MONEY', 'tony', 'robinhugues', '2023-10-24 00:00:00', 'Restaurant bill');
-INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description) VALUES ('1234-1234-1236', 20, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-23 00:00:00', 'Supermarket');
-INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description) VALUES ('1234-1234-1237', 14, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-22 00:00:00', 'Pizzas');
+INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description, fees) VALUES ('1234-1234-1234', 10, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-25 00:00:00', 'Cinema bill', 0.5);
+INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description, fees) VALUES ('1234-1234-1235', 45, 'SEND_MONEY', 'tony', 'robinhugues', '2023-10-24 00:00:00', 'Restaurant bill', 2.25);
+INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description, fees) VALUES ('1234-1234-1236', 20, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-23 00:00:00', 'Supermarket', 1);
+INSERT INTO TRANSACTIONS (id, amount, transaction_type, receiver, sender, created, description, fees) VALUES ('1234-1234-1237', 14, 'SEND_MONEY', 'robinhugues', 'tony', '2023-10-22 00:00:00', 'Pizzas', 0.7);

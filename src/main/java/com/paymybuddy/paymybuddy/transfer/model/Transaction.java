@@ -41,6 +41,9 @@ public class Transaction {
     @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
+    private BigDecimal fees;
+
     private enum TransactionType {
         DEPOSIT,
         WITHDRAW,
@@ -52,12 +55,13 @@ public class Transaction {
 
     private Transaction(BigDecimal amount, TransactionType type, String receiver, String sender, String description) {
         this.id = UUID.randomUUID().toString();
-        this.amount = amount;
+        this.amount = amount.multiply(BigDecimal.valueOf(0.95));
         this.type = type;
         this.receiver = receiver;
         this.sender = sender;
         this.date = LocalDateTime.now();
         this.description = description;
+        this.fees = this.amount.multiply(BigDecimal.valueOf(0.05));
     }
 
     public static Transaction createSendMoneyTransaction(BigDecimal amount, String receiver, String sender,
